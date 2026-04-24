@@ -1,0 +1,45 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:watch": "vite build --watch --sourcemap",
+    "serve": "php artisan serve --host 0.0.0.0 --port 8007",
+    "scss": "npx sass public/frontend/assets/scss/appstyle.scss public/frontend/assets/css/appstyle.css -w",
+    "reload": "php artisan db:wipe && php artisan migrate && php artisan migrate --path=Modules/Management/*/Migrations && php artisan migrate --path=Modules/Management/*/*/Migrations && php artisan migrate --path=Modules/Management/*/*/*/Migrations && php artisan db:seed && php artisan passport:install",
+    "migrate": "php artisan migrate --path=app/Modules/*/*/*",
+    "track": "node .deploy_tools/tracker.js",
+    "deploy:project": "bash .deploy_tools/deploy_to_vps.sh",
+    "deploy:files": "bash .deploy_tools/deploy_to_vps_via_file_tracking.sh",
+    "deploy:fix-404": "ssh -i $HOME/.ssh/id_rsa root@161.248.201.157 'cd /www/wwwroot/mydictionary.techparkit.info && bash .deploy_tools/fix_404.sh'",
+    "deploy:fix-permissions": "ssh -i $HOME/.ssh/id_rsa root@161.248.201.157 'cd /www/wwwroot/mydictionary.techparkit.info && chown -R www:www . && chmod -R 755 . && chmod -R 775 storage bootstrap/cache && echo \"✅ Permissions fixed!\"'"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.6",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "axios": "^1.7.2",
+    "bootstrap": "^5.2.3",
+    "laravel-vite-plugin": "^0.8.0",
+    "sass": "^1.56.1",
+    "vite": "^4.5.5",
+    "vue": "^3.2.37"
+  },
+  "dependencies": {
+    "@fancyapps/ui": "^6.0.30",
+    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@inertiajs/vue3": "^1.0.16",
+    "chart.js": "^4.5.1",
+    "chokidar": "^4.0.3",
+    "debounce": "^1.2.1",
+    "filefy": "^0.1.11",
+    "lightbox2": "^2.11.4",
+    "moment": "^2.30.1",
+    "nouislider": "^15.7.2",
+    "pinia": "^2.1.7",
+    "sweetalert2": "^11.14.4",
+    "vue-marquee-text-component": "^2.0.1",
+    "vue-router": "^4.2.5",
+    "vue3-carousel": "^0.3.3"
+  }
+}

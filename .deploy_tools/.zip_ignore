@@ -1,0 +1,10 @@
+node_modules/*
+node_modules/**/*
+.git/*
+.git
+bootstrap/cache/packages.php
+bootstrap/cache/services.php
+bootstrap/cache/config.php
+bootstrap/cache/routes-v7.php
+storage/logs/*.log
+storage/logs/*

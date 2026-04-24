@@ -1,0 +1,50 @@
+
+/*
+|--------------------------------------------------------------------------
+| Blog  Management
+|--------------------------------------------------------------------------
+*/  
+php artisan make:module BlogManagement/BlogCategory [title:string-100,description:text] --vue
+php artisan make:table BlogManagement/BlogCategory/BlogBlogCategory [blog_id:bigint,blog_category_id:bigint] --model
+
+php artisan make:module BlogManagement/Blog [blog_category_id:bigint{BlogManagement/BlogCategory},title:string-100,description:text,tags:text,publish_date:datetime,writer:bigint{BlogManagement/BlogWriter},thumbnail_image:string-100,images:text,blog_type:string-100,url:string-100,show_top:string-100,contributors:json,is_featured:boolean,is_published:boolean] --vue
+php artisan make:table BlogManagement/Blog/BlogMeta [blog_id:bigint,title:string-150,description:longtext,keywords:string-150,image:string-100,image_alter_text:string-150,image_title:string-150] --model
+php artisan make:table BlogManagement/Blog/BlogComment [blog_id:bigint,user_id:bigint,comment:text] --model
+php artisan make:table BlogManagement/Blog/BlogCommentReply [blog_comment_id:bigint,comment:json,user_id:bigint] --model
+php artisan make:table BlogManagement/Blog/BlogCommentBlogCommentReply [blog_comment_id:bigint,blog_comment_reply_id:bigint] --model
+php artisan make:table BlogManagement/Blog/BlogVideoLink [blog_id:bigint,video_link:string-50] --model
+php artisan make:table BlogManagement/Blog/BlogView [blog_id:bigint,user_id:bigint,ip:string-100] --model
+
+php artisan make:module BlogManagement/BlogWriter [name:string-100] --vue
+php artisan make:module BlogManagement/BlogTag [title:string-150] --vue
+
+/*
+|--------------------------------------------------------------------------
+| Project  Management
+|--------------------------------------------------------------------------
+*/  
+php artisan make:module ProjectManagement/Project [name:string,link:string,description:text,thumb_image:string-100,images:json,creator:bigint,slug:string-50] --vue
+php artisan make:table ProjectManagement/Project/ProjectComment [project_id:bigint,parent_id:bigint,user_id:bigint,name:string,email:string,phone:string,comment:text,creator:bigint,slug:string-50] --model
+php artisan make:table ProjectManagement/Project/ProjectView [project_id:bigint,ip:string-100] --model
+php artisan make:table ProjectManagement/Project/ProjectLike [project_id:bigint,user_id:bigint,session_id:string,ip:string-100] --model
+
+/*
+|--------------------------------------------------------------------------
+| Credential Management
+|--------------------------------------------------------------------------
+*/  
+php artisan make:module CredentialManagement/Credential [name:string,password:string,description:text,group_id:bigint,creator:bigint,slug:string-50] --vue
+
+/*
+|--------------------------------------------------------------------------
+| Personal Note Management
+|--------------------------------------------------------------------------
+*/  
+php artisan make:module PersonalNoteManagement/PersonalNote [name:string,description:longtext,date:string,image:string,creator:bigint,slug:string-50] --vue
+
+/*
+|--------------------------------------------------------------------------
+| Todo List Management
+|--------------------------------------------------------------------------
+*/  
+php artisan make:module TodoListManagement/TodoList [title:string,description:longtext,category_id:bigint,priority:bigint,is_complete:tinyint,progress:string,creator:bigint,slug:string-50] --vue

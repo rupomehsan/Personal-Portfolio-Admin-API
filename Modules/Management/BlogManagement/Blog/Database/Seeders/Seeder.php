@@ -1,0 +1,41 @@
+<?php
+namespace Modules\Management\BlogManagement\Blog\Database\Seeders;
+
+use Illuminate\Database\Seeder as SeederClass;
+use Faker\Factory as Faker;
+
+class Seeder extends SeederClass
+{
+    /**
+     * Run the database seeds.
+     php artisan db:seed --class="Modules\Management\BlogManagement\Blog\Database\Seeders\Seeder"
+     */
+    static $model = \Modules\Management\BlogManagement\Blog\Database\Models\Model::class;
+
+    public function run(): void
+    {
+        $faker = Faker::create();
+        self::$model::truncate();
+
+        for ($i = 1; $i <= 100; $i++) {
+            self::$model::create([                'blog_category_id' => $faker->randomNumber(8),
+                'title' => $faker->text(150),
+                'description' => $faker->paragraph,
+                'content' => $faker->paragraph,
+                'reading_time' => $faker->randomNumber,
+                'tags' => $faker->paragraph,
+                'publish_date' => $faker->dateTime,
+                'writer' => $faker->randomNumber(8),
+                'thumbnail_image' => $faker->text(100),
+                'images' => $faker->paragraph,
+                'blog_type' => $faker->text(100),
+                'url' => $faker->text(150),
+                'show_top' => $faker->text(100),
+                'contributors' => json_encode([$faker->word, $faker->word]),
+                'video_link' => $faker->text(50),
+                'is_featured' => $faker->boolean,
+                'is_published' => $faker->boolean,
+            ]);
+        }
+    }
+}

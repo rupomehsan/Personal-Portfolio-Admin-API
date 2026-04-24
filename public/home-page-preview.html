@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English ⇄ Bangla Dictionary - Home Page Preview</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=Nunito:400,500,600,700" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        .bg-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .hero-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .suggestions-dropdown {
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+        }
+        
+        .suggestion-item {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .suggestion-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .word-of-day .card {
+            border-radius: 15px;
+        }
+        
+        .popular-tags .badge {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        
+        .popular-tags .badge:hover {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card {
+            padding: 2rem 1rem;
+        }
+        
+        .feature-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 3rem 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .logo-img {
+                height: 32px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .brand-text {
+                display: none;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.75rem;
+            }
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <!-- Brand/Logo -->
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="/">
+                <img src="/logo.png" alt="Dictionary Logo" class="logo-img me-2">
+                <span class="brand-text">English ⇄ Bangla Dictionary</span>
+            </a>
+
+            <!-- Mobile menu button -->
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section with Search -->
+        <section class="hero-section bg-primary bg-gradient text-white">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1 class="display-4 fw-bold mb-4">
+                            English ⇄ Bangla Dictionary
+                        </h1>
+                        <p class="lead mb-5">
+                            Discover meanings, translations, and pronunciations with our comprehensive bilingual dictionary
+                        </p>
+
+                        <!-- Main Search Section -->
+                        <div class="search-container position-relative">
+                            <div class="input-group input-group-lg shadow-lg">
+                                <input
+                                    type="text"
+                                    class="form-control border-0"
+                                    placeholder="Search English or Bangla word..."
+                                    aria-label="Search word"
+                                >
+                                <button class="btn btn-success btn-lg" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Word of the Day Section -->
+        <section class="word-of-day py-5 bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body text-center p-4">
+                                <h3 class="card-title text-primary mb-3">
+                                    <i class="fas fa-star me-2"></i>
+                                    Word of the Day
+                                </h3>
+                                <h4 class="text-dark mb-2">Serenity</h4>
+                                <h5 class="text-secondary mb-3">প্রশান্তি</h5>
+                                <p class="text-muted mb-3">The state of being calm, peaceful, and untroubled.</p>
+                                <div class="example-sentence bg-primary bg-opacity-10 p-3 rounded">
+                                    <strong>Example:</strong> She found serenity in the quiet garden.
+                                </div>
+                                <button class="btn btn-outline-primary mt-3">
+                                    <i class="fas fa-sync-alt me-2"></i>
+                                    Get New Word
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Words Section -->
+        <section class="popular-words py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-5">
+                        <h3 class="text-dark">
+                            <i class="fas fa-fire me-2 text-danger"></i>
+                            Popular Words
+                        </h3>
+                        <p class="text-muted">Frequently searched words</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="popular-tags d-flex flex-wrap justify-content-center gap-2">
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Love (ভালোবাসা)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Peace (শান্তি)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Friendship (বন্ধুত্ব)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Family (পরিবার)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Success (সাফল্য)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Happy (খুশি)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Beautiful (সুন্দর)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Knowledge (জ্ঞান)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Respect (সম্মান)</span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 p-2">Hope (আশা)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-5">
+                        <h3 class="text-dark">Why Choose Our Dictionary?</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card text-center h-100">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-language fa-3x text-primary"></i>
+                            </div>
+                            <h5>Bilingual Support</h5>
+                            <p class="text-muted">Seamless translation between English and Bangla languages</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card text-center h-100">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-mobile-alt fa-3x text-success"></i>
+                            </div>
+                            <h5>Mobile Friendly</h5>
+                            <p class="text-muted">Optimized for all devices with responsive design</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="feature-card text-center h-100">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-search fa-3x text-info"></i>
+                            </div>
+                            <h5>Smart Search</h5>
+                            <p class="text-muted">Intelligent search with autocomplete suggestions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-primary mb-3">
+                        <i class="fas fa-book-open me-2"></i>
+                        English ⇄ Bangla Dictionary
+                    </h5>
+                    <p class="text-muted mb-3">
+                        A comprehensive online dictionary to help you translate between English and Bangla languages with ease.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/about" class="text-light text-decoration-none">About Dictionary</a></li>
+                        <li><a href="/contact" class="text-light text-decoration-none">Contact & Feedback</a></li>
+                        <li><a href="/privacy" class="text-light text-decoration-none">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-muted">
+                        &copy; 2025 English ⇄ Bangla Dictionary. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="social-icons">
+                        <a href="#" class="text-light me-3" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-light me-3" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-light" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

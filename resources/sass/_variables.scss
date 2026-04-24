@@ -1,0 +1,29 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Custom Dictionary Theme Colors
+$primary: #667eea;
+$secondary: #764ba2;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #343a40;
+
+// Custom gradients
+$gradient-primary: linear-gradient(135deg, $primary 0%, $secondary 100%);
+
+// Border radius
+$border-radius: 0.5rem;
+$border-radius-lg: 1rem;
+
+// Shadows
+$box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+$box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+$box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);

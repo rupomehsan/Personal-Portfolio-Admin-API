@@ -1,0 +1,65 @@
+<?php
+
+use Illuminate\Support\Str;
+
+if (!function_exists('ImportData')) {
+    function ImportData($moduleName, $fields)
+    {
+        $formated_module = explode('/', $moduleName);
+
+        if (count($formated_module) > 1) {
+
+            $moduleName = implode('/', $formated_module);
+            $moduleName = Str::replace("/", "\\", $moduleName);
+        } else {
+            $moduleName = Str::replace("/", "\\", $moduleName);
+        }
+
+
+
+        $content = <<<"EOD"
+            <?php
+
+            namespace Modules\\Management\\{$moduleName}\\Actions;
+            use Modules\\Management\\{$moduleName}\\Others\\ImportJob;
+            use Illuminate\Support\Facades\Bus;
+            use Maatwebsite\Excel\Facades\Excel;
+            class ImportData
+            {
+                static \$model = \Modules\\Management\\{$moduleName}\\Database\\Models\\Model::class;
+
+                public static function execute()
+                {
+                    try {
+                        // dd(request()->all());
+                        if (!request()->hasFile('file')) {
+                            return messageResponse('Plase select a file', [], 404, 'error');
+                        }
+
+                        \$path = request()->file->store('temp');
+                        \$data = Excel::toArray([], storage_path('app/' . \$path));
+                        \$chunks = array_chunk(\$data[0], 10);
+                        \$header = [];
+                        \$batch = Bus::batch([])->dispatch();
+                        foreach (\$chunks as \$key => \$chunk) {
+                            if (\$key === 0) {
+                                \$header = array_shift(\$chunk); // Set the header and remove it from data
+                            }
+                            \$batch->add(new ImportJob(\$chunk, \$header));
+                        }
+
+                        \$filePath = storage_path('app/' . \$path);
+                        if (file_exists(\$filePath)) {
+                            unlink(\$filePath);
+                        }
+
+                        return messageResponse('Item Successfully updated', [], 200, 'success');
+                    } catch (\Exception \$e) {
+                        return messageResponse(\$e->getMessage(), [], 500, 'server_error');
+                    }
+                }
+            }
+            EOD;
+        return $content;
+    }
+}

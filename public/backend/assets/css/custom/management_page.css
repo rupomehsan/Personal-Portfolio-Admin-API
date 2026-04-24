@@ -1,0 +1,26 @@
+.all_page_search {
+    height: 28px;
+    max-width: 400px;
+}
+
+.action_btn{
+    line-height: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+}
+
+.action_btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.action_btn:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.action_btn.btn-sm {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.85rem;
+}

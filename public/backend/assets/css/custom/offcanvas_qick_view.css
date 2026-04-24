@@ -1,0 +1,192 @@
+
+.cursor-pointer,
+.cursor_pointer{
+    cursor: pointer;
+}
+
+.filter_item{
+    margin-bottom: 20px;
+}
+
+.off_canvas {
+    position: fixed;
+    height: 100svh;
+    min-width: 300px;
+    top: 0;
+    z-index: 10;
+    border: 1px solid var(--border-color);
+    z-index: 99999;
+    right: -100vw;
+    transition-duration: .3s;
+}
+
+.off_canvas.active{
+    right: 0;
+}
+
+.off_canvas.quick_view {
+    min-width: 500px;
+}
+
+.off_canvas .off_canvas_body {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    height: 100%;
+}
+
+.off_canvas .off_canvas_body .header {
+    min-height: 50px;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+    line-height: 29px;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.off_canvas .off_canvas_body .header .heading_text {
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+.off_canvas .off_canvas_body .header .close_button {
+    border: 0;
+    background-color: transparent;
+    color: var(--danger-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.off_canvas .off_canvas_body .header .close_button:hover {
+    opacity: 0.8;
+}
+
+.off_canvas .off_canvas_body .data_content {
+    height: calc(100svh - 52px);
+    padding: 15px;
+    overflow-y: auto;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.off_canvas .off_canvas_body .data_content .label {
+    margin-bottom: 15px;
+    color: var(--text-primary);
+    font-weight: 600;
+    display: block;
+}
+
+.off_canvas .off_canvas_body .data_content .input_item {
+    width: 100%;
+}
+
+/* Filter Item Styling */
+.filter_item {
+    margin-bottom: 20px;
+}
+
+.filter_item label {
+    color: var(--text-primary);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.filter_item .form-control {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.filter_item .form-control:focus {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter_item .form-control::placeholder {
+    color: var(--text-light);
+}
+
+/* Light Theme Off-Canvas Styling */
+body.light-theme .off_canvas .off_canvas_body {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}
+
+body.light-theme .off_canvas .off_canvas_body .header {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+body.light-theme .off_canvas .off_canvas_body .header .heading_text {
+    color: var(--text-primary) !important;
+}
+
+body.light-theme .off_canvas .off_canvas_body .data_content {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}
+
+body.light-theme .off_canvas .off_canvas_body .data_content .label {
+    color: var(--text-primary) !important;
+}
+
+body.light-theme .filter_item label {
+    color: var(--text-primary) !important;
+}
+
+body.light-theme .filter_item .form-control {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+body.light-theme .filter_item .form-control:focus {
+    background-color: var(--bg-input) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Dark Theme Off-Canvas Styling */
+body.dark-theme .off_canvas .off_canvas_body {
+    background-color: rgb(30 41 59) !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-theme .off_canvas .off_canvas_body .header {
+    background-color: rgb(30 41 59) !important;
+    color: var(--text-primary) !important;
+    border-color: rgb(51 65 85) !important;
+}
+
+body.dark-theme .off_canvas .off_canvas_body .header .heading_text {
+    color: var(--text-primary) !important;
+}
+
+body.dark-theme .off_canvas .off_canvas_body .data_content {
+    background-color: rgb(30 41 59) !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-theme .off_canvas .off_canvas_body .data_content .label {
+    color: var(--text-primary) !important;
+}
+
+body.dark-theme .filter_item label {
+    color: var(--text-primary) !important;
+}
+
+body.dark-theme .filter_item .form-control {
+    background-color: rgb(15 23 42) !important;
+    color: var(--text-primary) !important;
+    border-color: rgb(51 65 85) !important;
+}
+
+body.dark-theme .filter_item .form-control:focus {
+    background-color: rgb(15 23 42) !important;
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2) !important;
+}

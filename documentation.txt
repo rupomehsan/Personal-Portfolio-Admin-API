@@ -1,0 +1,68 @@
+
+/*
+|--------------------------------------------------------------------------
+| Basic CRUD Management
+|--------------------------------------------------------------------------
+*/
+
+php artisan make:module BasicCrudManagement/BlogCategory [title:string-100] --vue
+php artisan make:module BasicCrudManagement/BlogWriter [name:string-100] --vue
+php artisan make:module BasicCrudManagement/Blog [blog_category_id:bigint,title:string-100,description:text,tags:text,publish_date:datetime,writer:string-100,meta_description:text,meta_keywords:string,thumbnail_image:string,image:string,blog_type:string,contributors:josn,url:string,show_top:string] --vue
+
+php artisan make:table BasicCrudManagement/Blog/BlogBlogCategory [blog_id:bigint,blog_category_id:bigint] --model
+
+php artisan make:table BasicCrudManagement/Blog/BlogView [blog_id:bigint,user_id:bigint,ip:string] --model
+
+php artisan make:table BasicCrudManagement/Blog/BlogComment [blog_id:bigint,user_id:bigint,name:string,email:string,comment:text] --model
+
+/*
+|--------------------------------------------------------------------------
+| Command Instruction
+|--------------------------------------------------------------------------
+*/
+
+DB-datatype: longtext
+<textarea> </textarea> 
+
+DB-datatype: date 
+<input type="date"><br>
+
+DB-datatype: datetime 
+<input type="datetime-local"><br>
+
+DB-datatype: int,integer,bigint 
+<input type="number" placeholder="Number"><br>
+
+DB-datatype: file , stringfile(string)
+<input type="file"><br>
+
+DB-datatype: enum 
+<select><select>
+
+DB-datatype: tinyint,boolean 
+<input type="radio" name="gender"> Male<br>
+
+DB-datatype: password 
+<input type="password" placeholder="Password"><br>
+
+DB-datatype: string 
+<input type="text" placeholder="Text"><br>
+
+/*
+|--------------------------------------------------------------------------
+| reactive function called
+|--------------------------------------------------------------------------
+*/
+
+form_fields.jd:
+onchangeAction: "functionName",
+
+Form.vue:
+methods():{
+    changeAction: function (actionTitle, event, ref) {
+        this[actionTitle](actionTitle, event, ref);
+    },
+    functionName(actionTitle, event, ref){
+        do something
+    }
+}
