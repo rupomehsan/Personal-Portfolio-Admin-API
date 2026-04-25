@@ -2,15 +2,8 @@
   <!--Start sidebar-wrapper-->
   <div id="sidebar-wrapper">
     <div class="brand-logo">
-      <router-link
-        :to="{ name: `adminDashboard` }"
-        class="d-flex align-items-center"
-      >
-        <img
-          :src="`${get_setting_value('image') ?? 'avatar.png'} `"
-          class="logo-icon"
-          alt="logo icon"
-        />
+      <router-link :to="{ name: `adminDashboard` }" class="d-flex align-items-center">
+        <img :src="`${get_setting_value('image') ?? 'avatar.png'} `" class="logo-icon" alt="logo icon" />
         <h5 class="logo-text">Super Admin Panel</h5>
       </router-link>
       <div class="close-btn">
@@ -19,13 +12,7 @@
     </div>
 
     <div class="text-center mt-3">
-      <img
-        class="rounded-circle p-1"
-        height="70"
-        width="70"
-        :src="`${auth_info.image ?? 'avatar.png'}`"
-        alt=""
-      />
+      <img class="rounded-circle p-1" height="70" width="70" :src="`${auth_info.image ?? 'avatar.png'}`" alt="" />
       <p class="mt-2">Mr. {{ auth_info.name }}</p>
     </div>
     <hr />
@@ -56,13 +43,6 @@
         ]"
       />
 
-
-      <side-bar-single-menu
-        :icon="`fa fa-plus`"
-        :menu_title="`Contact`"
-        :route_name="`AllContact`"
-      />
- 
       <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`BlogManagement`"
@@ -72,24 +52,16 @@
             title: `BlogCategory`,
             icon: `zmdi zmdi-dot-circle-alt`,
           },
+
+         
           {
             route_name: `AllBlog`,
             title: `Blog`,
             icon: `zmdi zmdi-dot-circle-alt`,
           },
-          {
-            route_name: `AllBlogWriter`,
-            title: `BlogWriter`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },
-          {
-            route_name: `AllBlogTag`,
-            title: `BlogTag`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },
         ]"
-/>
-<side-bar-drop-down-menus
+      />
+      <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`ProjectManagement`"
         :menus="[
@@ -99,8 +71,8 @@
             icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
-/>
-<side-bar-drop-down-menus
+      />
+      <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`CredentialManagement`"
         :menus="[
@@ -110,8 +82,8 @@
             icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
-/>
-<side-bar-drop-down-menus
+      />
+      <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`PersonalNoteManagement`"
         :menus="[
@@ -121,8 +93,8 @@
             icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
-/>
-<side-bar-drop-down-menus
+      />
+      <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`TodoListManagement`"
         :menus="[
@@ -132,8 +104,9 @@
             icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
-/>
-<!-- Management end -->
+      />
+      <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`Contact`" :route_name="`AllContact`" />
+      <!-- Management end -->
     </ul>
   </div>
 </template>

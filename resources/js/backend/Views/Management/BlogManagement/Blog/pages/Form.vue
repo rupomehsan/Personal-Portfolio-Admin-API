@@ -72,85 +72,102 @@ export default {
     form_fields,
     param_id: null,
   }),
+
   created: async function () {
-    let id = (this.param_id = this.$route.params.id);
+    const id = (this.param_id = this.$route.params.id);
     this.reset_fields();
+    // load all relation selects in parallel, then populate edit values
+    await Promise.all([
+      this.loadBlogCategories(),
+    ]);
     if (id) {
-      this.set_fields(id);
+      await this.set_fields(id);
     }
   },
+
   methods: {
     ...mapActions(store, {
       create: "create",
       update: "update",
       details: "details",
-      get_all: "get_all",
       set_only_latest_data: "set_only_latest_data",
     }),
-    reset_fields: function () {
-      this.form_fields.forEach((item) => {
-        item.value = "";
+
+    // ── Relation loaders ───────────────────────────────────────────────
+    async loadBlogCategories() {
+      try {
+        const { data } = await axios.get("blog-categories", {
+          params: { limit: 1000, status: "active" },
+        });
+        // handle both paginated ({ data: { data: [...] } }) and plain ({ data: [...] })
+        const items = data?.data?.data ?? data?.data ?? [];
+        const field = this.form_fields.find((f) => f.name === "blog_category_id");
+        if (field) {
+          field.data_list = items.map((cat) => ({
+            label: cat.title,
+            value: cat.id,
+          }));
+        }
+      } catch (e) {
+        console.error("Failed to load blog categories:", e);
+      }
+    },
+
+    // ── Form helpers ───────────────────────────────────────────────────
+    reset_fields() {
+      this.form_fields.forEach((field) => (field.value = ""));
+    },
+
+    async set_fields(id) {
+      await this.details(id);
+      if (!this.item) return;
+      this.form_fields.forEach((field, index) => {
+        if (field.name in this.item) {
+          this.form_fields[index].value = this.item[field.name];
+        }
+        if (field.name === "description") {
+          try { $("#description").summernote("code", this.item.description); }
+          catch { /* editor not mounted yet */ }
+        }
       });
     },
-    set_fields: async function (id) {
-      this.param_id = id;
-      await this.details(id);
-      if (this.item) {
-        this.form_fields.forEach((field, index) => {
-          Object.entries(this.item).forEach((value) => {
-            if (field.name == value[0]) {
-              this.form_fields[index].value = value[1];
-            }
 
-            if (field.name == "description" && value[0] == "description") {
-              $("#description").summernote("code", value[1]);
-            }
-          });
+    // ── Submit ─────────────────────────────────────────────────────────
+    async submitHandler($event) {
+      this.setSummerEditor();
+      this.set_only_latest_data(true);
+      const response = this.param_id
+        ? await this.update($event)
+        : await this.create($event);
+
+      if ([200, 201].includes(response?.status)) {
+        window.s_alert(
+          this.param_id ? "Data successfully updated" : "Data successfully created"
+        );
+        this.$router.push({
+          name: this.param_id
+            ? `Details${this.setup.route_prefix}`
+            : `All${this.setup.route_prefix}`,
         });
       }
     },
 
-    submitHandler: async function ($event) {
-      this.set_only_latest_data(true);
-      if (this.param_id) {
-        this.setSummerEditor();
-        let response = await this.update($event);
-        // await this.get_all();
-        if ([200, 201].includes(response.status)) {
-          window.s_alert("Data successfully updated");
-          this.$router.push({ name: `Details${this.setup.route_prefix}` });
-        }
-      } else {
-        this.setSummerEditor();
-        let response = await this.create($event);
-        // await this.get_all();
-        if ([200, 201].includes(response.status)) {
-          window.s_alert("Data Successfully Created");
-          this.$router.push({ name: `All${this.setup.route_prefix}` });
-        }
-      }
-    },
     setSummerEditor() {
-      // Set property_detail summernote content if description field exists
-      const descriptionElement = document.getElementById("description");
-      if (descriptionElement) {
-        try {
-          var markupStr = $("#description").summernote("code");
-          var target = document.createElement("input");
-          target.setAttribute("name", "description");
-          target.value = markupStr;
-          descriptionElement.appendChild(target);
-        } catch (e) {
-          console.warn("Description editor not available:", e);
-        }
+      const el = document.getElementById("description");
+      if (!el) return;
+      try {
+        const input = document.createElement("input");
+        input.setAttribute("name", "description");
+        input.value = $("#description").summernote("code");
+        el.appendChild(input);
+      } catch (e) {
+        console.warn("Summernote not available:", e);
       }
     },
   },
 
   computed: {
-    ...mapState(store, {
-      item: "item",
-    }),
+    ...mapState(store, { item: "item" }),
   },
 };
 </script>

@@ -7,12 +7,18 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+use Modules\Management\BlogManagement\BlogCategory\Database\Models\Model as BlogCategoryModel;
+
 class Model extends EloquentModel
 {
     use HasFactory, SoftDeletes;
 
     protected $table = "blogs";
     protected $guarded = [];
+
+    protected $casts = [
+        'images'       => 'array',
+    ];
 
     protected static function booted()
     {
@@ -39,6 +45,12 @@ class Model extends EloquentModel
     public function scopeInactive($q)
     {
         return $q->where('status', 'inactive');
+    }
+
+
+    public function blog_category()
+    {
+        return $this->belongsTo(BlogCategoryModel::class, 'blog_category_id');
     }
 
 }

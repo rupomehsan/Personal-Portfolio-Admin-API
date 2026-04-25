@@ -21,6 +21,7 @@ include_once(__DIR__ . '/BackendModule/Actions/UpdateStatus.php');
 
 include_once(__DIR__ . '/BackendModule/Others/ApiDocumentation.php');
 include_once(__DIR__ . '/BackendModule/Others/ImportJob.php');
+include_once(__DIR__ . '/BackendModule/Others/CommandGuide.php');
 
 include_once(__DIR__ . '/BackendModule/Controller/Controller.php');
 

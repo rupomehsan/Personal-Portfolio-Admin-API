@@ -72,11 +72,12 @@ class ModelingDirectory extends Command
             $this->fields[] = explode(':', $item);
         }
 
-        // Identify file fields
+        // Identify file fields (file / image / images types all trigger upload handling)
         $this->fileFields = [];
         $this->hasFileUploads = false;
         foreach ($this->fields as $key => $field) {
-            if (isset($field[1]) && $field[1] === 'file') {
+            $baseType = isset($field[1]) ? strtolower(explode('-', $field[1])[0]) : '';
+            if (in_array($baseType, ['file', 'image', 'images'])) {
                 $this->fileFields[] = $field[0];
                 $this->hasFileUploads = true;
             }
@@ -157,6 +158,7 @@ class ModelingDirectory extends Command
             'Others/Api.http' => ApiDocumentation($this->moduleName),
             'Others/Doc.txt' => Documentation(),
             'Others/ImportJob.php' => ImportJob($module_path),
+            'Others/COMMAND_GUIDE.md' => CommandGuide(),
         ];
 
         foreach ($files as $relativePath => $content) {

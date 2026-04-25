@@ -66,6 +66,15 @@ if (!function_exists('Migration')) {
                         $stringLimit = $limit[0];
                     }
 
+                    // Handle image-N size pattern (e.g. image-150 → string(150))
+                    if ($position === 5) {
+                        $parts = explode('-', $type);
+                        if ($parts[0] === 'image' && isset($parts[1]) && is_numeric($parts[1])) {
+                            $stringLimit = (int) $parts[1];
+                            $type = 'image';
+                        }
+                    }
+
                     //enum value set end
 
                     // Handle tinyint and boolean with custom options (e.g., tinyint-yes.no, boolean-active.inactive)
@@ -77,6 +86,10 @@ if (!function_exists('Migration')) {
 
                     if (in_array($type, ['string', 'stringfile', 'file'])) {
                         $type = 'string';
+                    } elseif (in_array($type, ['image'])) {
+                        $type = 'string';   // stored as path string
+                    } elseif (in_array($type, ['images'])) {
+                        $type = 'text';     // stored as JSON array of paths
                     } elseif (in_array($type, ['text'])) {
                         $type = 'text';
                     } elseif (in_array($type, ['longtext'])) {
@@ -218,6 +231,15 @@ if (!function_exists('TableMigration')) {
                         $stringLimit = $limit[0];
                     }
 
+                    // Handle image-N size pattern (e.g. image-150 → string(150))
+                    if ($position === 5) {
+                        $parts = explode('-', $type);
+                        if ($parts[0] === 'image' && isset($parts[1]) && is_numeric($parts[1])) {
+                            $stringLimit = (int) $parts[1];
+                            $type = 'image';
+                        }
+                    }
+
                     //enum value set end
 
                     // Handle tinyint and boolean with custom options (e.g., tinyint-yes.no, boolean-active.inactive)
@@ -229,6 +251,10 @@ if (!function_exists('TableMigration')) {
 
                     if (in_array($type, ['string', 'stringfile', 'file'])) {
                         $type = 'string';
+                    } elseif (in_array($type, ['image'])) {
+                        $type = 'string';   // stored as path string
+                    } elseif (in_array($type, ['images'])) {
+                        $type = 'text';     // stored as JSON array of paths
                     } elseif (in_array($type, ['text'])) {
                         $type = 'text';
                     } elseif (in_array($type, ['longtext'])) {

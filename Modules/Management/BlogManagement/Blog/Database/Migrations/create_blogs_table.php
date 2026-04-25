@@ -22,11 +22,11 @@ return new class extends Migration
             $table->text('tags')->nullable();
             $table->datetime('publish_date')->nullable();
             $table->bigInteger('writer')->nullable();
-            $table->string('thumbnail_image', 100)->nullable();
+            $table->string('thumbnail_image', 150)->nullable();
             $table->text('images')->nullable();
-            $table->string('blog_type', 100)->nullable();
-            $table->string('url', 150)->nullable();
-            $table->string('show_top', 100)->nullable();
+            $table->enum('blog_type', ['news','tutorial','opinion'])->nullable();
+            $table->string('url', 100)->nullable();
+            $table->enum('show_top', ['yes','no'])->nullable();
             $table->json('contributors')->nullable();
             $table->string('video_link', 50)->nullable();
             $table->tinyInteger('is_featured')->default(0);
