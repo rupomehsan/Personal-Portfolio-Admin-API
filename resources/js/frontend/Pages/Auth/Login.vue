@@ -1,186 +1,184 @@
 <template>
-  <div class="login-container">
-    <div class="login-card">
-      <!-- Header Section -->
-      <div class="login-header">
-        <div class="shield-icon">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+  <title>Login | </title>
+  <div class="login-root">
+    <!-- Video Background -->
+    <video class="bg-video" autoplay muted loop playsinline>
+      <source src="/frontend/encryption-bg.webm" type="video/webm" />
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- Binary Rain Canvas -->
+    <canvas ref="rainCanvas" class="binary-canvas" aria-hidden="true"></canvas>
+
+    <!-- Login Panel -->
+    <div class="terminal-panel">
+      <!-- Terminal Top Bar -->
+      <div class="terminal-topbar">
+        <div class="terminal-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <span class="terminal-title">root@sys:~# AUTH_INIT.SH</span>
+        <span class="blink-cursor">▮</span>
+      </div>
+
+      <!-- Header -->
+      <div class="terminal-header">
+        <div class="lock-icon">
+          <svg
+            width="36"
+            height="36"
+            viewBox="0 0 24 24"
+            fill="#00ffe0"
+            style="filter: drop-shadow(0 0 8px #00ffe0)"
+          >
             <path
-              d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11H16V18H8V11H9.2V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.4,8.7 10.4,10V11H13.6V10C13.6,8.7 12.8,8.2 12,8.2Z"
+              d="M18,8h-1V6c0-2.76-2.24-5-5-5S7,3.24,7,6v2H6c-1.1,0-2,0.9-2,2v10c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V10C20,8.9,19.1,8,18,8z M12,17c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S13.1,17,12,17z M15.1,8H8.9V6c0-1.71,1.39-3.1,3.1-3.1s3.1,1.39,3.1,3.1V8z"
             />
           </svg>
         </div>
-        <h1 class="login-title">Login Account</h1>
+        <h1 class="sys-title">SECURE_ACCESS</h1>
+        <p class="sys-subtitle">
+          <span class="prompt">$&gt;</span> Authenticate to continue<span
+            class="animated-dots"
+            ><span>.</span><span>.</span><span>.</span></span
+          >
+        </p>
       </div>
 
-      <!-- Form Section -->
-      <div class="login-form-section">
-        <div class="form-wrapper">
-          <!-- Login Form -->
-          <form @submit.prevent="LoginSubmitHandler" class="login-form">
-            <!-- Email Field -->
-            <div class="form-group">
-              <label class="form-label">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="label-icon"
-                >
-                  <path
-                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
-                  />
-                </svg>
-                Email Address
-              </label>
-              <input
-                v-model="email"
-                type="email"
-                name="email"
-                class="form-input"
-                placeholder="test@gmail.com"
-                required
-              />
-            </div>
+      <!-- Form Body -->
+      <form @submit.prevent="LoginSubmitHandler" class="terminal-form">
+        <!-- Email -->
+        <div class="field-group">
+          <label class="field-label">[ USR_EMAIL ]</label>
+          <div class="input-wrap">
+            <span class="input-prefix">&#9658;</span>
+            <input
+              v-model="email"
+              type="email"
+              name="email"
+              class="field-input"
+              placeholder="user@domain.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+        </div>
 
-            <!-- Password Field -->
-            <div class="form-group">
-              <label class="form-label">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="label-icon"
-                >
-                  <path
-                    d="M18,8h-1V6c0-2.76-2.24-5-5-5S7,3.24,7,6v2H6c-1.1,0-2,0.9-2,2v10c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V10C20,8.9,19.1,8,18,8z M12,17c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S13.1,17,12,17z M15.1,8H8.9V6c0-1.71,1.39-3.1,3.1-3.1s3.1,1.39,3.1,3.1V8z"
-                  />
-                </svg>
-                Password
-              </label>
-              <div class="password-input-wrapper">
-                <input
-                  :type="showPassword ? 'text' : 'password'"
-                  name="password"
-                  class="form-input"
-                  placeholder="••••••••"
-                  value=""
-                  required
-                  v-model="password"
-                />
-                <button
-                  type="button"
-                  @click="showPassword = !showPassword"
-                  class="password-toggle-btn"
-                >
-                  <svg
-                    v-if="!showPassword"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"
-                    />
-                  </svg>
-                  <svg
-                    v-else
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.09L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.76,7.13 11.38,7 12,7Z"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Remember Me and Forgot Password -->
-            <div class="form-options">
-              <label class="remember-checkbox">
-                <input type="checkbox" v-model="rememberMe" />
-
-                Remember me
-              </label>
-              <Link href="forgot-password" class="forgot-link"
-                >Forgot password?</Link
-              >
-            </div>
-
-            <!-- Sign In Button -->
-            <button type="submit" class="signin-btn">
+        <!-- Password -->
+        <div class="field-group">
+          <label class="field-label">[ PASSWD_HASH ]</label>
+          <div class="input-wrap">
+            <span class="input-prefix">&#9658;</span>
+            <input
+              :type="showPassword ? 'text' : 'password'"
+              v-model="password"
+              name="password"
+              class="field-input"
+              placeholder="••••••••••••"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              @click="showPassword = !showPassword"
+              class="eye-btn"
+            >
               <svg
-                width="20"
-                height="20"
+                v-if="!showPassword"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
-                <path d="M10,17L15,12L10,7V10H4V14H10V17Z" />
+                <path
+                  d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"
+                />
               </svg>
-              Sign In
+              <svg
+                v-else
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.09L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.76,7.13 11.38,7 12,7Z"
+                />
+              </svg>
             </button>
-          </form>
-          <!-- Footer -->
-          <div class="form-footer">
-            <p class="signup-prompt">
-              Don't have an account?
-              <Link href="register" class="signup-link">Register</Link>
-            </p>
           </div>
         </div>
+
+        <!-- Options -->
+        <div class="form-options">
+          <label class="remember-label">
+            <input type="checkbox" v-model="rememberMe" class="cb-input" />
+            <span class="cb-custom"></span>
+            <span class="cb-text">--remember-me</span>
+          </label>
+          <Link href="forgot-password" class="forgot-link">forgot_passwd?</Link>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="transmit-btn" :disabled="loading">
+          <span v-if="!loading" class="btn-inner">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+            </svg>
+            TRANSMIT_
+          </span>
+          <span v-else class="btn-inner">
+            <span class="spinner"></span>
+            PROCESSING...
+          </span>
+        </button>
+      </form>
+
+      <!-- Footer -->
+      <div class="terminal-footer">
+        <span class="footer-text">No account?</span>
+        <Link href="register" class="register-link">./register --new</Link>
       </div>
+
+      <!-- Corner decorations -->
+      <span class="corner corner-tl"></span>
+      <span class="corner corner-tr"></span>
+      <span class="corner corner-bl"></span>
+      <span class="corner corner-br"></span>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "pinia";
-import Layout from "./Layout/Layout.vue";
-//auth_store
 import { auth_store } from "../../GlobalStore/auth_store";
-export default {
-  components: { Layout },
 
+export default {
   data() {
     return {
       loading: false,
-      checkingAuth: true, // Add loading state for auth check
+      checkingAuth: true,
       showPassword: false,
-      passwordError: false,
       email: "superadmin@gmail.com",
       password: "12345678",
       rememberMe: false,
+      _rainId: null,
     };
   },
 
-  created: async function () {
+  async created() {
     this.checkingAuth = true;
-
-    // Check if we have both token and role
     const token = localStorage.getItem("auth_token");
     const role = localStorage.getItem("auth_role");
 
     if (token && role) {
       try {
-        // Verify authentication with server before redirecting
         await this.check_is_auth();
-
-        // Only redirect if authentication is successful
         if (this.is_auth) {
           const prevUrl = window.sessionStorage.getItem("prevurl");
           const userRole = parseInt(role);
-
-          console.log("User already authenticated, redirecting...", {
-            role: userRole,
-            prevUrl,
-          });
-
           if (userRole === 1 || role === "1") {
             const redirectUrl =
               prevUrl && prevUrl.startsWith("/admin")
@@ -190,23 +188,22 @@ export default {
             return;
           }
         } else {
-          // If auth check fails, clear invalid tokens
-          console.log("Auth check failed, clearing invalid tokens");
           this.clearAuthData();
         }
-      } catch (error) {
-        console.error("Auth verification failed:", error);
-        // Clear potentially invalid tokens
+      } catch {
         this.clearAuthData();
       }
     }
-
-    // If no token, invalid auth, or auth check failed, user stays on login page
     this.checkingAuth = false;
   },
 
   mounted() {
     this.loadRememberedCredentials();
+    this.startBinaryRain();
+  },
+
+  beforeUnmount() {
+    if (this._rainId) cancelAnimationFrame(this._rainId);
   },
 
   computed: {
@@ -217,15 +214,81 @@ export default {
   },
 
   methods: {
-    ...mapActions(auth_store, {
-      check_is_auth: "check_is_auth",
-    }),
+    ...mapActions(auth_store, { check_is_auth: "check_is_auth" }),
 
-    LoginSubmitHandler: async function () {
+    startBinaryRain() {
+      const canvas = this.$refs.rainCanvas;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const fontSize = 15;
+      // Only advance drops every STEP frames — lower = slower
+      const STEP = 12;
+      let frame = 0;
+
+      const resize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      };
+      resize();
+      window.addEventListener("resize", resize);
+
+      let cols = Math.floor(canvas.width / fontSize);
+      // Stagger starting positions so columns don't all begin at once
+      let drops = Array.from({ length: cols }, (_, i) =>
+        Math.floor(Math.random() * -(canvas.height / fontSize))
+      );
+
+      const draw = () => {
+        frame++;
+
+        // Every frame: paint a very subtle fade so trails dissolve slowly
+        ctx.fillStyle = "rgba(2, 4, 8, 0.055)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Only move drops every STEP frames
+        if (frame % STEP === 0) {
+          cols = Math.floor(canvas.width / fontSize);
+          while (drops.length < cols) drops.push(0);
+
+          ctx.font = `${fontSize}px "Courier New", monospace`;
+
+          for (let i = 0; i < cols; i++) {
+            const bit = Math.random() > 0.5 ? "1" : "0";
+            const y = drops[i] * fontSize;
+
+            // Bright white leading character
+            ctx.fillStyle = "#e0fff8";
+            ctx.font = `bold ${fontSize}px "Courier New", monospace`;
+            ctx.fillText(bit, i * fontSize, y);
+
+            // Cyan glow one step behind
+            ctx.fillStyle = "rgba(0, 255, 210, 0.75)";
+            ctx.font = `${fontSize}px "Courier New", monospace`;
+            ctx.fillText(bit, i * fontSize, y - fontSize);
+
+            // Mid trail
+            ctx.fillStyle = "rgba(0, 210, 170, 0.35)";
+            ctx.fillText(bit, i * fontSize, y - fontSize * 2);
+
+            // Dim deep tail
+            ctx.fillStyle = "rgba(0, 160, 130, 0.15)";
+            ctx.fillText(bit, i * fontSize, y - fontSize * 4);
+
+            // Reset column after it exits, with a random pause chance
+            if (y > canvas.height && Math.random() > 0.97) drops[i] = 0;
+            drops[i]++;
+          }
+        }
+
+        this._rainId = requestAnimationFrame(draw);
+      };
+
+      draw();
+    },
+
+    async LoginSubmitHandler() {
       try {
         this.loading = true;
-
-        // Handle remember me functionality
         if (this.rememberMe) {
           this.saveCredentials();
         } else {
@@ -241,20 +304,12 @@ export default {
 
         if (response.data?.status === "success") {
           let data = response.data?.data;
-
           if (data.access_token && data.user) {
-            // Store authentication data
             localStorage.setItem("auth_token", data.access_token);
             localStorage.setItem("auth_role", data.user.role_id);
-
-            // Clear any previous URL after successful login
             const prevUrl = window.sessionStorage.getItem("prevurl");
             window.sessionStorage.removeItem("prevurl");
-
-            // Show success message
             window.s_alert("Login Successfully");
-
-            // Redirect based on role
             let redirectUrl = "";
             if (data.user.role_id === 1) {
               redirectUrl =
@@ -262,9 +317,7 @@ export default {
                   ? prevUrl
                   : "/admin#/dashboard";
             }
-
             if (redirectUrl) {
-              // Small delay to ensure token is saved before redirect
               setTimeout(() => {
                 window.location.href = redirectUrl;
               }, 100);
@@ -272,34 +325,27 @@ export default {
           } else {
             window.s_alert(
               "Login failed. Invalid response from server.",
-              "error",
+              "error"
             );
           }
         } else {
           window.s_alert(
             response.data?.message || "Login failed. Please try again.",
-            "error",
+            "error"
           );
         }
       } catch (error) {
-        console.error("Login error", error);
-
-        // Handle specific error responses
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
+        if (error.response?.data?.message) {
           window.s_alert(error.response.data.message, "error");
-        } else if (error.response && error.response.status === 401) {
+        } else if (error.response?.status === 401) {
           window.s_alert(
             "Invalid credentials. Please check your email and password.",
-            "error",
+            "error"
           );
         } else {
           window.s_alert(
             "Login failed. Please check your connection and try again.",
-            "error",
+            "error"
           );
         }
       } finally {
@@ -308,14 +354,13 @@ export default {
     },
 
     saveCredentials() {
-      const credentials = {
-        email: this.email,
-        password: this.password,
-        rememberMe: this.rememberMe,
-      };
       localStorage.setItem(
         "rememberedCredentials",
-        JSON.stringify(credentials),
+        JSON.stringify({
+          email: this.email,
+          password: this.password,
+          rememberMe: this.rememberMe,
+        })
       );
     },
 
@@ -330,324 +375,516 @@ export default {
     },
 
     loadRememberedCredentials() {
-      const savedCredentials = localStorage.getItem("rememberedCredentials");
-      if (savedCredentials) {
+      const saved = localStorage.getItem("rememberedCredentials");
+      if (saved) {
         try {
-          const credentials = JSON.parse(savedCredentials);
-          this.email = credentials.email || "";
-          this.password = credentials.password || "";
-          this.rememberMe = credentials.rememberMe || false;
-        } catch (error) {
-          console.error("Error loading remembered credentials:", error);
+          const c = JSON.parse(saved);
+          this.email = c.email || "";
+          this.password = c.password || "";
+          this.rememberMe = c.rememberMe || false;
+        } catch {
           this.clearSavedCredentials();
         }
       }
     },
-
-    setPassword(email) {
-      this.email = email;
-    },
-  },
-  computed: {
-    ...mapState(auth_store, {
-      auth_info: "auth_info",
-      is_auth: "is_auth",
-    }),
   },
 };
 </script>
 
 <style scoped>
-/* Main Container */
-.login-container {
-  min-height: 100vh;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:global(body),
+:global(html) {
+  overflow: hidden !important;
+  height: 100%;
+}
+
+.login-root {
+  position: fixed;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
-}
-
-/* Login Card */
-.login-card {
-  background: white;
-  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-  width: 100%;
-  max-width: 420px;
-  animation: fadeInUp 0.6s ease-out;
+  font-family: "Courier New", Courier, monospace;
+  background: #020408;
 }
 
-@keyframes fadeInUp {
+/* Video BG — more visible now */
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.75;
+}
+
+/* Lighter overlay so video shows through */
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 4, 8, 0.32);
+  z-index: 1;
+}
+
+/* Binary Rain Canvas — full page */
+.binary-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Terminal Panel */
+.terminal-panel {
+  position: relative;
+  z-index: 10;
+  width: calc(100% - 32px);
+  max-width: 460px;
+  background: rgba(4, 10, 18, 0.9);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(0, 255, 200, 0.08),
+    0 0 50px rgba(0, 255, 200, 0.12), 0 30px 60px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  animation: panelIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes panelIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(32px) scale(0.97);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-/* Header Section */
-.login-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 40px 30px;
-  text-align: center;
-  color: white;
+/* Corner decorations */
+.corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: #00ffe0;
+  border-style: solid;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.corner-tl {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+}
+.corner-tr {
+  top: 0;
+  right: 0;
+  border-width: 2px 2px 0 0;
+}
+.corner-bl {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 2px 2px;
+}
+.corner-br {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
 }
 
-.shield-icon {
-  width: 80px;
-  height: 80px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
+/* Top bar */
+.terminal-topbar {
   display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid rgba(0, 255, 200, 0.15);
+  padding: 10px 16px;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.dot-red {
+  background: #ff5f57;
+  box-shadow: 0 0 6px #ff5f5780;
+}
+.dot-yellow {
+  background: #febc2e;
+  box-shadow: 0 0 6px #febc2e80;
+}
+.dot-green {
+  background: #28c840;
+  box-shadow: 0 0 6px #28c84080;
+}
+
+.terminal-title {
+  flex: 1;
+  font-size: 11px;
+  color: #00ffe0;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+.blink-cursor {
+  color: #00ffe0;
+  animation: blink 1s step-end infinite;
+  font-size: 14px;
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Header */
+.terminal-header {
+  padding: 28px 30px 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 255, 200, 0.1);
+}
+
+.lock-icon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
-  color: white;
-}
-.shield-icon svg {
-  color: white !important;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 200, 0.75);
+  background: rgba(0, 255, 200, 0.1);
+  color: #00ffe0;
+  margin-bottom: 14px;
+  box-shadow: 0 0 28px rgba(0, 255, 200, 0.4),
+    inset 0 0 14px rgba(0, 255, 200, 0.1);
 }
 
-.login-title {
-  font-size: 1.75rem;
+.sys-title {
+  font-size: 1.5rem;
   font-weight: 700;
-  margin: 0 0 8px 0;
-  letter-spacing: -0.025em;
-  color: white !important;
-}
-
-.login-subtitle {
-  font-size: 1rem;
-  opacity: 0.9;
-  margin: 0;
-  font-weight: 400;
-}
-
-/* Form Section */
-.login-form-section {
-  padding: 40px 30px;
-}
-
-/* Form Groups */
-.form-group {
-  margin-bottom: 24px;
-}
-
-.form-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(0, 255, 200, 0.9),
+    0 0 30px rgba(0, 255, 200, 0.5);
   margin-bottom: 8px;
 }
 
-.label-icon {
-  color: #6b7280;
+/* Subtitle — bright and readable */
+.sys-subtitle {
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(0, 255, 200, 0.6);
 }
 
-.form-input {
-  width: 100%;
-  padding: 16px 18px;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  background: #f9fafb;
-  color: #1f2937;
-  outline: none;
-  box-sizing: border-box;
+.prompt {
+  color: #a78bfa;
+  margin-right: 4px;
 }
 
-.form-input::placeholder {
-  color: #9ca3af;
-  font-weight: 400;
+/* Animated bouncing dots */
+.animated-dots {
+  display: inline-flex;
+  gap: 1px;
+}
+.animated-dots span {
+  color: #00ffe0;
+  font-weight: 700;
+  animation: dotBounce 1.4s infinite ease-in-out;
+}
+.animated-dots span:nth-child(1) {
+  animation-delay: 0s;
+}
+.animated-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.animated-dots span:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
-.form-input:focus {
-  border-color: #667eea;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+@keyframes dotBounce {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
 }
 
-/* Password Input Wrapper */
-.password-input-wrapper {
-  position: relative;
+/* Form */
+.terminal-form {
+  padding: 26px 30px;
 }
 
-.password-input-wrapper .form-input {
-  padding-right: 50px;
+.field-group {
+  margin-bottom: 20px;
 }
 
-.password-toggle-btn {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #9ca3af;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
+.field-label {
+  display: block;
+  font-size: 11px;
+  color: #00ffe0;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+.input-wrap {
   display: flex;
   align-items: center;
-  justify-content: center;
+  background: rgba(0, 255, 200, 0.04);
+  border: 1px solid rgba(0, 255, 200, 0.2);
+  border-radius: 4px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  overflow: hidden;
 }
 
-.password-toggle-btn:hover {
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
+.input-wrap:focus-within {
+  border-color: rgba(0, 255, 200, 0.6);
+  box-shadow: 0 0 0 3px rgba(0, 255, 200, 0.08),
+    0 0 14px rgba(0, 255, 200, 0.12);
 }
 
-/* Form Options */
+.input-prefix {
+  padding: 0 10px;
+  color: #00ffe0;
+  font-size: 12px;
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+.field-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e2e8f0;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  padding: 13px 12px 13px 0;
+  caret-color: #00ffe0;
+}
+
+.field-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.eye-btn {
+  background: none;
+  border: none;
+  color: rgba(0, 255, 200, 0.45);
+  cursor: pointer;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+.eye-btn:hover {
+  color: #00ffe0;
+}
+
+/* Options row */
 .form-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
-.remember-checkbox {
+.remember-label {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: #374151;
   cursor: pointer;
 }
 
-.remember-checkbox input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  border: 2px solid #d1d5db;
-  border-radius: 4px;
-  cursor: pointer;
+.cb-input {
+  display: none;
 }
 
-.checkmark {
-  width: 18px;
-  height: 18px;
-  border: 2px solid #d1d5db;
-  border-radius: 4px;
+.cb-custom {
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(0, 255, 200, 0.45);
+  border-radius: 2px;
+  background: transparent;
   display: inline-block;
   position: relative;
-  transition: all 0.3s ease;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
 }
 
-.remember-checkbox input[type="checkbox"]:checked + .checkmark {
-  background: #667eea;
-  border-color: #667eea;
+.cb-input:checked + .cb-custom {
+  background: #00ffe0;
+  border-color: #00ffe0;
 }
-
-.remember-checkbox input[type="checkbox"]:checked + .checkmark::after {
+.cb-input:checked + .cb-custom::after {
   content: "";
   position: absolute;
-  left: 5px;
-  top: 2px;
-  width: 6px;
-  height: 10px;
-  border: solid white;
+  left: 3px;
+  top: 1px;
+  width: 5px;
+  height: 8px;
+  border: solid #000;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
 
+.cb-text {
+  font-size: 12px;
+  color: rgba(0, 255, 200, 0.65);
+  letter-spacing: 0.04em;
+}
+
 .forgot-link {
-  color: #667eea;
+  font-size: 12px;
+  color: #a78bfa;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: color 0.3s ease;
+  letter-spacing: 0.04em;
+  transition: color 0.2s, text-shadow 0.2s;
 }
-
 .forgot-link:hover {
-  color: #764ba2;
+  color: #c4b5fd;
+  text-shadow: 0 0 8px rgba(167, 139, 250, 0.5);
 }
 
-/* Sign In Button */
-.signin-btn {
+/* Transmit Button */
+.transmit-btn {
   width: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 16px 24px;
-  font-size: 16px;
-  font-weight: 600;
+  background: transparent;
+  border: 1px solid rgba(0, 255, 200, 0.55);
+  border-radius: 4px;
+  color: #00ffe0;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 14px 24px;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 24px;
 }
 
-.signin-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+.transmit-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 200, 0.1),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
 }
 
-.signin-btn:active {
-  transform: translateY(0);
+.transmit-btn:hover::before {
+  transform: translateX(100%);
 }
 
-/* Form Footer */
-.form-footer {
+.transmit-btn:hover {
+  background: rgba(0, 255, 200, 0.08);
+  border-color: #00ffe0;
+  box-shadow: 0 0 24px rgba(0, 255, 200, 0.25),
+    inset 0 0 20px rgba(0, 255, 200, 0.05);
+  text-shadow: 0 0 8px rgba(0, 255, 200, 0.7);
+}
+
+.transmit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0, 255, 200, 0.2);
+  border-top-color: #00ffe0;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer */
+.terminal-footer {
+  padding: 16px 30px 22px;
   text-align: center;
-  border-top: 1px solid #e5e7eb;
-  padding-top: 24px;
+  border-top: 1px solid rgba(0, 255, 200, 0.1);
 }
 
-.signup-prompt {
-  color: #6b7280;
-  font-size: 14px;
-  margin: 0;
+.footer-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-right: 6px;
+  letter-spacing: 0.04em;
 }
 
-.signup-link {
-  color: #667eea;
+.register-link {
+  font-size: 12px;
+  color: #a78bfa;
   text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
+  letter-spacing: 0.04em;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.register-link:hover {
+  color: #c4b5fd;
+  text-shadow: 0 0 8px rgba(167, 139, 250, 0.5);
 }
 
-.signup-link:hover {
-  color: #764ba2;
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 480px) {
-  .login-container {
-    padding: 10px;
+  .terminal-form {
+    padding: 20px;
   }
-
-  .login-header {
-    padding: 30px 20px;
+  .terminal-header {
+    padding: 20px 20px 16px;
   }
-
-  .login-title {
-    font-size: 1.5rem;
-  }
-
-  .login-form-section {
-    padding: 30px 20px;
-  }
-
-  .shield-icon {
-    width: 70px;
-    height: 70px;
+  .sys-title {
+    font-size: 1.2rem;
   }
 }
 </style>
