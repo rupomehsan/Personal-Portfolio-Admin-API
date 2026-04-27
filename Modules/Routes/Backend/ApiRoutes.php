@@ -44,3 +44,4 @@ include_once base_path("Modules/Management/ProjectManagement/Project/Routes/Rout
 include_once base_path("Modules/Management/CredentialManagement/Credential/Routes/Route.php");
 include_once base_path("Modules/Management/PersonalNoteManagement/PersonalNote/Routes/Route.php");
 include_once base_path("Modules/Management/TodoListManagement/TodoList/Routes/Route.php");
+include_once base_path("Modules/Management/ProductManagement/DigitalProduct/Routes/Route.php");

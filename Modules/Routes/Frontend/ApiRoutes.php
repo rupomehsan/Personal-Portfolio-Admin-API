@@ -6,3 +6,4 @@ use Illuminate\Support\Facades\Route;
 
  Route::get('get-all-blogs', [BlogController::class,'index']);
  Route::get('get-all-projects', [ProjectController::class,'index']);
+ Route::get('get-all-comments-by-blog/{slug}', [BlogController::class,'getBlogComments']);

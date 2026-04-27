@@ -1,0 +1,11 @@
+task 1 - resources/js/backend/Views/Management/BlogManagement/BlogComment/pages/All.vue in this page make hte custom code for a button reply comment and add add anohter form ReplyComment and sumbit the comment in this api
+Route::prefix('blog-comment-replies')->group(function () {
+Route::post('store', [Controller::class, 'submitCommentReply']);
+});
+
+task 2 - resources/js/backend/Views/Management/BlogManagement/BlogComment/pages/All.vue on ths page also add a dropt down menu ihte header all blog if i click a apecisfi blog it will be the show only that blog comment on this page
+
+task 3 - also add anohter button all comment and iwant toshow the all comment in hte specific blog and ican reply from tha page pag ea alos apage for that BlogWiseComments
+
+note use that custom code no need to use the builtin componet all functilnality use ustomer current those feature
+in the resources/js/backend/Views/Management/BlogManagement/BlogComment/pages/All.vue page

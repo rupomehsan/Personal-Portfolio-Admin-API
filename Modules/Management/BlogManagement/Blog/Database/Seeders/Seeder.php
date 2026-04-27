@@ -18,7 +18,8 @@ class Seeder extends SeederClass
         self::$model::truncate();
 
         for ($i = 1; $i <= 100; $i++) {
-            self::$model::create([                'blog_category_id' => $faker->randomNumber(8),
+            self::$model::create([                
+                'blog_category_id' => $faker->randomNumber(8),
                 'title' => $faker->text(150),
                 'description' => $faker->paragraph,
                 'content' => $faker->paragraph,
@@ -29,12 +30,12 @@ class Seeder extends SeederClass
                 'thumbnail_image' => $faker->word,
                 'images' => $faker->word,
                 'blog_type' => $faker->randomElement(array (
-  0 => 'news',
-  1 => 'tutorial',
-  2 => 'opinion',
-)),
+                                        0 => 'news',
+                                        1 => 'tutorial',
+                                        2 => 'opinion',
+                                        )),
                 'url' => $faker->word,
-                'show_top' => $faker->word,
+                'show_top' => 1,
                 'contributors' => json_encode([$faker->word, $faker->word]),
                 'video_link' => $faker->text(50),
                 'is_featured' => $faker->boolean,

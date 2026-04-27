@@ -49,45 +49,49 @@ if (!function_exists('Seeder')) {
             foreach ($fields as $field) {
                 [$fieldName, $fieldType] = $field;
 
-                switch ($fieldType) {
+                switch (true) {
                     case str_starts_with($fieldType, 'string'):
-                        if (preg_match('/^string-(\d+)$/', $fieldType, $matches)) {
+                    case str_starts_with($fieldType, 'stringfile'):
+                    case str_starts_with($fieldType, 'file'):
+                    case str_starts_with($fieldType, 'image'):
+                        if (preg_match('/^(?:string|stringfile|file|image)-(\d+)$/', $fieldType, $matches)) {
                             $length = (int) $matches[1];
                             $content .= "                '$fieldName' => \$faker->text($length),\n";
                         } else {
-                            $content .= "                '$fieldName' => \$faker->sentence,\n";
+                            $content .= "                '$fieldName' => \$faker->word,\n";
                         }
                         break;
-                    case 'text':
-                    case 'longtext':
+                    case in_array($fieldType, ['text', 'longtext', 'images']):
                         $content .= "                '$fieldName' => \$faker->paragraph,\n";
                         break;
-                    case 'int':
-                    case 'integer':
-                        $content .= "                '$fieldName' => \$faker->randomNumber,\n";
+                    case in_array($fieldType, ['int', 'integer', 'number', 'intiger']):
+                        $content .= "                '$fieldName' => \$faker->randomNumber(5),\n";
                         break;
-                    case strpos($fieldType, 'enum-') === 0: // Handles cases like 'enum-male.female'
-                        $options = explode('.', str_replace('enum-', '', $fieldType));
+                    case str_starts_with($fieldType, 'enum-'):
+                    case str_starts_with($fieldType, 'tinyint-'):
+                    case str_starts_with($fieldType, 'boolean-'):
+                        $baseType = explode('-', $fieldType)[0];
+                        $options = explode('.', str_replace($baseType . '-', '', $fieldType));
                         $content .= "                '$fieldName' => \$faker->randomElement(" . var_export($options, true) . "),\n";
                         break;
-                    case 'json':
+                    case $fieldType === 'json':
                         $content .= "                '$fieldName' => json_encode([\$faker->word, \$faker->word]),\n";
                         break;
-                    case 'float':
+                    case in_array($fieldType, ['float', 'decimal', 'double']):
                         $content .= "                '$fieldName' => \$faker->randomFloat(2, 0, 1000),\n";
                         break;
-                    case 'tinyint':
-                    case  'boolean':
+                    case in_array($fieldType, ['tinyint', 'boolean']):
                         $content .= "                '$fieldName' => \$faker->boolean,\n";
                         break;
-
-                    case 'datetime':
-                        $content .= "                '$fieldName' => \$faker->dateTime,\n";
+                    case in_array($fieldType, ['date', 'datetime', 'timestamp']):
+                        $content .= "                '$fieldName' => \$faker->dateTime()->format('Y-m-d H:i:s'),\n";
                         break;
-
-                    case str_starts_with($fieldType, 'bigint'):
+                    case str_starts_with($fieldType, 'bigint') || str_starts_with($fieldType, 'biginteger'):
                         $content .= "                '$fieldName' => \$faker->randomNumber(8),\n";
                         break;  
+                    case $fieldType === 'uuid':
+                        $content .= "                '$fieldName' => \$faker->uuid,\n";
+                        break;
                     default:
                         $content .= "                '$fieldName' => \$faker->word,\n";
                         break;
