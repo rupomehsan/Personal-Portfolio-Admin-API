@@ -15,7 +15,7 @@ class GetProjectComments
             $status        = request()->input('status') ?? 'active';
 
             $data = self::$model::query()
-                ->with(['project:id,name', 'user:id,name'])
+                ->with(['project:id,name', 'user:id,name', 'replies.user:id,name'])
                 ->where('project_id', $project_id)
                 ->whereNull('parent_id')
                 ->where('status', $status)

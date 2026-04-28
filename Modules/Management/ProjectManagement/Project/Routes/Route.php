@@ -25,6 +25,7 @@ Route::prefix('v1')->group(function () {
         Route::get('{comment_id}/replies', [Controller::class, 'getProjectCommentReplies']);
         Route::post('store', [Controller::class, 'submitProjectComment']);
         Route::post('reply', [Controller::class, 'submitProjectCommentReply']);
+        Route::post('destroy/{id}', [Controller::class, 'destroyProjectComment']);
     });
 
 });

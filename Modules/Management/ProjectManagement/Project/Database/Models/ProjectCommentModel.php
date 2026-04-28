@@ -3,7 +3,7 @@
 namespace Modules\Management\ProjectManagement\Project\Database\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
-
+use Modules\Management\ProjectManagement\Project\Database\Models\ProjectCommentReplyModel;
 class ProjectCommentModel extends EloquentModel
 {
     protected $table = "project_comments";
@@ -21,5 +21,10 @@ class ProjectCommentModel extends EloquentModel
             'user_id',
             'id'
         );
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(self::class, 'parent_id', 'id')->with('replies');
     }
 }

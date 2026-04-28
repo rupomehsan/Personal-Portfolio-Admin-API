@@ -13,7 +13,7 @@ class GetProjectCommentReplies
             $orderByColumn = request()->input('sort_by_col') ?? 'id';
             $orderByType   = request()->input('sort_type') ?? 'desc';
 
-            $data = self::$model::with(['user:id,name'])
+            $data = self::$model::with(['user:id,name', 'replies.user:id,name'])
                 ->where('parent_id', $comment_id)
                 ->orderBy($orderByColumn, $orderByType)
                 ->paginate($pageLimit);

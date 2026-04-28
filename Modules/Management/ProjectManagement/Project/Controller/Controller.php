@@ -15,8 +15,11 @@ use Modules\Management\ProjectManagement\Project\Actions\BulkActions;
 use Modules\Management\ProjectManagement\Project\Actions\GetAllProjectComments;
 use Modules\Management\ProjectManagement\Project\Actions\GetProjectComments;
 use Modules\Management\ProjectManagement\Project\Actions\GetProjectCommentReplies;
+use Modules\Management\ProjectManagement\Project\Actions\DestroyProjectComment;
+use Modules\Management\ProjectManagement\Project\Actions\GetSingleProject;
 use Modules\Management\ProjectManagement\Project\Actions\SubmitProjectComment;
 use Modules\Management\ProjectManagement\Project\Actions\SubmitProjectCommentReply;
+use Modules\Management\ProjectManagement\Project\Actions\SubmitProjectLike;
 use Modules\Management\ProjectManagement\Project\Validations\BulkActionsValidation;
 use Modules\Management\ProjectManagement\Project\Validations\DataStoreValidation;
 use Modules\Management\ProjectManagement\Project\Validations\ProjectCommentValidation;
@@ -111,5 +114,20 @@ class Controller extends ControllersController
     public function submitProjectCommentReply(ProjectCommentReplyValidation $request)
     {
         return SubmitProjectCommentReply::execute($request);
+    }
+
+    public function destroyProjectComment($id)
+    {
+        return DestroyProjectComment::execute($id);
+    }
+
+    public function getSingleProject($slug)
+    {
+        return GetSingleProject::execute($slug);
+    }
+
+    public function submitProjectLike($project_id)
+    {
+        return SubmitProjectLike::execute($project_id);
     }
 }

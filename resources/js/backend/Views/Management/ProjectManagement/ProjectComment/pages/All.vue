@@ -158,6 +158,17 @@
                           >
                             <i class="fa fa-comments mr-1"></i>Replies
                           </button>
+                          <button
+                            class="btn btn-sm"
+                            style="
+                              font-size: 0.73rem;
+                              background: #dc3545;
+                              color: #fff;
+                            "
+                            @click="delete_comment(comment.id)"
+                          >
+                            <i class="fa fa-trash mr-1"></i>Delete
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -557,6 +568,27 @@ export default {
         month: "short",
         day: "numeric",
       });
+    },
+
+    async delete_comment(id) {
+      if (
+        !confirm(
+          "Are you sure you want to delete this comment? Its replies will also be deleted.",
+        )
+      )
+        return;
+      try {
+        const res = await axios.post(
+          `${this.api_base}/project-comments/destroy/${id}`,
+        );
+        if (res.data.status === "success" || res.status === 200) {
+          window.s_alert("Comment deleted successfully", "success");
+          this.load_comments();
+        }
+      } catch (err) {
+        console.error("Error deleting comment:", err);
+        window.s_alert("Failed to delete comment", "error");
+      }
     },
   },
 };
