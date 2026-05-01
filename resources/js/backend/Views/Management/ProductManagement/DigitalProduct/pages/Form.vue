@@ -97,51 +97,76 @@ export default {
       await this.details(id);
       if (this.item) {
         this.form_fields.forEach((field, index) => {
-          Object.entries(this.item).forEach((value) => {
-            if (field.name == value[0]) {
-              this.form_fields[index].value = value[1];
-            }
-
-            if (field.name == "description" && value[0] == "description") {
-              $("#description").summernote("code", value[1]);
+          Object.entries(this.item).forEach(([key, val]) => {
+            if (field.name === key) {
+              this.form_fields[index].value = val;
             }
           });
         });
+        // Load content into all visible summernote editors after fields are set
+        this._loadEditorContents();
       }
+    },
+
+    _editorFields() {
+      // Returns all visible textarea/editor fields — single source of truth
+      return this.form_fields.filter(
+        (f) => (f.type === "textarea" || f.type === "editor") && f.is_visible !== false
+      );
+    },
+
+    _loadEditorContents() {
+      // Summernote initialises with a 1 s delay inside TextEditor.vue,
+      // so we wait a bit longer before setting content.
+      setTimeout(() => {
+        this._editorFields().forEach((field) => {
+          const value = this.item?.[field.name];
+          if (value != null) {
+            try {
+              $(`#${field.name}`).summernote("code", value);
+            } catch (e) {
+              console.warn(`[Editor] Failed to set content for "${field.name}":`, e);
+            }
+          }
+        });
+      }, 1100);
+    },
+
+    setSummerEditor() {
+      // Dynamically collect content from every visible summernote editor
+      // and inject it as a hidden input so the form data includes it.
+      this._editorFields().forEach((field) => {
+        const el = document.getElementById(field.name);
+        if (!el) return;
+        try {
+          const content = $(`#${field.name}`).summernote("code");
+          // Remove any previously injected hidden input for this field
+          // (prevents duplicate values on re-submit)
+          el.querySelectorAll(`input[name="${field.name}"]`).forEach((n) => n.remove());
+          const hidden = document.createElement("input");
+          hidden.setAttribute("name", field.name);
+          hidden.value = content;
+          el.appendChild(hidden);
+        } catch (e) {
+          console.warn(`[Editor] Failed to read content for "${field.name}":`, e);
+        }
+      });
     },
 
     submitHandler: async function ($event) {
       this.set_only_latest_data(true);
+      this.setSummerEditor();
       if (this.param_id) {
-        this.setSummerEditor();
         let response = await this.update($event);
-        // await this.get_all();
         if ([200, 201].includes(response.status)) {
           window.s_alert("Data successfully updated");
           this.$router.push({ name: `Details${this.setup.route_prefix}` });
         }
       } else {
-        this.setSummerEditor();
         let response = await this.create($event);
-        // await this.get_all();
         if ([200, 201].includes(response.status)) {
           window.s_alert("Data Successfully Created");
           this.$router.push({ name: `All${this.setup.route_prefix}` });
-        }
-      }
-    },
-    setSummerEditor() {
-      // Set property_detail summernote content if description field exists
-      const descriptionElement = document.getElementById("description");
-      if (descriptionElement) {
-        try {
-          var markupStr = $("#description").summernote("code");
-          var target = document.createElement("input");
-          target.setAttribute("name", "description");
-          target.value = markupStr;
-          descriptionElement.appendChild(target);
-        } catch (e) {
-          console.warn("Description editor not available:", e);
         }
       }
     },

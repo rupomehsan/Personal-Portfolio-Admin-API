@@ -80,6 +80,16 @@
             title: `DigitalProduct`,
             icon: `zmdi zmdi-dot-circle-alt`,
           },
+          {
+            route_name: `AllDigitalProductComment`,
+            title: `Product Comments`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `AllProductOrder`,
+            title: `ProductOrder`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          }
         ]"
       />
       <side-bar-drop-down-menus

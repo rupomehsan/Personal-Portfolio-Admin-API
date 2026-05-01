@@ -62,6 +62,13 @@ class GetAllData
                 });
             }
 
+              if (request()->has('is_featured') && request()->input('is_featured')) {
+
+                $data = $data->where('is_featured', request()->input('is_featured'));
+               
+            }
+
+
             if ($start_date && $end_date) {
                  if ($end_date > $start_date) {
                     $data->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']);

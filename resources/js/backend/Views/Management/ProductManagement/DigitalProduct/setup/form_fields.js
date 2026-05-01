@@ -87,6 +87,15 @@ export default [
     type: "textarea",
     rows: 4,
     value: "",
+    is_visible: false,
+    class: "col-md-6",
+  },
+  {
+    name: "features",
+    label: "Enter features",
+    type: "multichip",
+    rows: 4,
+    value: "",
     is_visible: true,
     class: "col-md-6",
   },
@@ -99,19 +108,7 @@ export default [
     is_visible: true,
     class: "col-md-6",
   },
-  {
-    name: "is_active",
-    label: "Select Is Active",
-    type: "select",
-    multiple: false,
-    data_list: [
-      { label: "Yes", value: "1" },
-      { label: "No", value: "0" },
-    ],
-    value: "",
-    is_visible: true,
-    class: "col-md-6",
-  },
+
   {
     name: "is_featured",
     label: "Select Is Featured",

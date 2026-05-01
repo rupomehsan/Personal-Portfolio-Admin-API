@@ -420,9 +420,9 @@ export default {
 
 /* ── Multiple grid ─────────────────────────────────────────────────── */
 .fu-multi-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-.fu-multi-card { width: 110px; display: flex; flex-direction: column; gap: 3px; }
+.fu-multi-card { width: 150px; display: flex; flex-direction: column; gap: 3px; }
 .fu-multi-thumb {
-  position: relative; width: 110px; height: 90px;
+  position: relative; width: 150px; height: 150px;
   border-radius: 8px; overflow: hidden;
   background: var(--bg-hover); border: 1px solid var(--border-color);
   display: flex; align-items: center; justify-content: center;
@@ -456,7 +456,7 @@ export default {
 
 /* ── Add-more tile ─────────────────────────────────────────────────── */
 .fu-multi-add {
-  width: 110px; height: 90px; border-radius: 8px;
+  width: 150px; height: 150px; border-radius: 8px;
   border: 2px dashed var(--border-color); background: var(--bg-input);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 4px; cursor: pointer; color: var(--text-light); font-size: .72rem;

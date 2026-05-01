@@ -48,3 +48,18 @@ php artisan make:module PersonalNoteManagement/PersonalNote [name:string,descrip
 |--------------------------------------------------------------------------
 */  
 php artisan make:module TodoListManagement/TodoList [title:string,description:longtext,category_id:bigint,priority:bigint,is_complete:tinyint,progress:string] --vue
+
+/*
+|--------------------------------------------------------------------------
+| ProductManagement Management
+|--------------------------------------------------------------------------
+*/  
+php artisan make:module ProductManagement/DigitalProduct [category_id:bigint,title:string-150,short_description:text,description:longtext,regular_price:decimal,sale_price:decimal,demo_url:string-150,file_path:text,file_type:string-50,version:string-50,thumbnail_image:string-100,gallery_images:text,features:text,tags:text,is_active:boolean,is_featured:boolean] --vue
+
+php artisan make:table ProductManagement/DigitalProduct/ProductOrder [digital_product_id:bigint,first_name:string-150,last_name:string-150,email:string-150,trx_number:string-150,payment_details:json,payment_status:enum-pending.due.compelete] --model
+
+php artisan make:table ProductManagement/DigitalProduct/ProductComment [digital_product_id:bigint,parent_id:bigint,user_id:bigint,name:string,email:string,phone:string,comment:text] --model
+
+php artisan make:table ProductManagement/DigitalProduct/ProductView [digital_product_id:bigint,ip:string-100] --model
+
+php artisan make:table ProductManagement/DigitalProduct/ProductLike [digital_product_id:bigint,user_id:bigint,session_id:string,ip:string-100] --model

@@ -39,7 +39,7 @@ class ModelingDirectory extends Command
             if ($this->withVue) {
                 $this->generateVueFiles();
             }
-            
+
             $this->info("Module {$this->moduleName} created successfully!");
         } catch (\Exception $e) {
             $this->error("Error creating module: " . $e->getMessage());

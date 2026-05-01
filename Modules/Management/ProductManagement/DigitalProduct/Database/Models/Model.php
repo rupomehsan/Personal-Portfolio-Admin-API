@@ -14,6 +14,14 @@ class Model extends EloquentModel
     protected $table = "digital_products";
     protected $guarded = [];
 
+    protected $casts = [
+        'gallery_images' => 'array',
+        'features'       => 'array',
+        'tags'           => 'array',
+    ];
+
+
+
     protected static function booted()
     {
         static::created(function ($data) {

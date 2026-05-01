@@ -6,4 +6,5 @@
 */  
 
 php artisan make:module BlogManagement/Blog [blog_category_id:bigint,title:string-150,description:text,content:longtext,reading_time:integer,tags:text,publish_date:datetime,writer:bigint,thumbnail_image:string-100,images:text,blog_type:string-100,url:string-150,show_top:string-100,contributors:json,video_link:string-50,is_featured:boolean,is_published:boolean] --vue
-php artisan make:module ProductManagement/DigitalProduct [category_id:bigint,title:string-150,short_description:text,description:longtext,regular_price:decimal,sale_price:decimal,demo_url:string-150,file_path:text,file_type:string-50,version:string-50,thumbnail_image:string-100,gallery_images:text,features:text,tags:text,is_active:boolean,is_featured:boolean] --vue
+
+php artisan make:module ProductManagement/DigitalProduct/ProductOrder [digital_product_id:bigint,first_name:string-150,last_name:string-150,email:string-150,trx_number:string-150,payment_details:json,payment_status:enum.pending.due.compelete] --model

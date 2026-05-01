@@ -19,6 +19,8 @@ import BlogRoutes from "../Management/BlogManagement/Blog/setup/routes.js";
 import BlogCategoryRoutes from "../Management/BlogManagement/BlogCategory/setup/routes.js";
 import BlogCommentRoutes from "../Management/BlogManagement/BlogComment/setup/routes.js";
 import ProjectCommentRoutes from "../Management/ProjectManagement/ProjectComment/setup/routes.js";
+import DigitalProductCommentRoutes from "../Management/ProductManagement/DigitalProductComment/setup/routes.js";
+import ProductOrderRoutes from "../Management/ProductManagement/ProductOrder/setup/routes.js";
 
 import ContactRoutes from "../Management/Contact/setup/routes.js";
 import UserRoleRoutes from "../Management/UserManagement/Role/setup/routes.js";
@@ -46,6 +48,8 @@ const routes = {
     BlogCategoryRoutes,
     BlogCommentRoutes,
     ProjectCommentRoutes,
+    DigitalProductCommentRoutes,
+    ProductOrderRoutes,
 
     ContactRoutes,
 
