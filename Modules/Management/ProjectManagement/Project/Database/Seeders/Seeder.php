@@ -121,6 +121,7 @@ class Seeder extends SeederClass
                 'name' => $project['title'],
                 'link' => $project['link'],
                 'description' => $project['desc'],
+                'is_featured' => 1,
                 'thumb_image' => $faker->imageUrl(), // Placeholder image since we don't have one in the array
                 'images' => json_encode([$faker->imageUrl(), $faker->imageUrl()]),
             ]);

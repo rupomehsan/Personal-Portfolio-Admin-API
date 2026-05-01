@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='/app/Modules/Management/ProductManagement/DigitalProduct/Database/create_digital_products_table.php'
+     php artisan migrate --path='Modules/Management/ProductManagement/DigitalProduct/Database/Migrations/create_digital_products_table.php'
      * Run the migrations.
      */
     public function up(): void

@@ -24,6 +24,12 @@ class GetAllData
 
             $data = self::$model::query();
 
+             if (request()->has('is_featured') && request()->input('is_featured')) {
+
+                $data = $data->where('is_featured', request()->input('is_featured'));
+               
+            }
+
             if (request()->has('search') && request()->input('search')) {
                 $searchKey = request()->input('search');
                 $data = $data->where(function ($q) use ($searchKey) {

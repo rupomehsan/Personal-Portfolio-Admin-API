@@ -55,7 +55,33 @@
           },
         ]"
       />
-
+ <side-bar-drop-down-menus
+        :icon="`fa fa-plus`"
+        :menu_title="`ProjectManagement`"
+        :menus="[
+          {
+            route_name: `AllProject`,
+            title: `Project`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+          {
+            route_name: `AllProjectComment`,
+            title: `Project Comments`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+        ]"
+      />
+      <side-bar-drop-down-menus
+        :icon="`fa fa-plus`"
+        :menu_title="`ProductManagement`"
+        :menus="[
+          {
+            route_name: `AllDigitalProduct`,
+            title: `DigitalProduct`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+        ]"
+      />
       <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`BlogManagement`"
@@ -78,22 +104,7 @@
           },
         ]"
       />
-      <side-bar-drop-down-menus
-        :icon="`fa fa-plus`"
-        :menu_title="`ProjectManagement`"
-        :menus="[
-          {
-            route_name: `AllProject`,
-            title: `Project`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },
-          {
-            route_name: `AllProjectComment`,
-            title: `Project Comments`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },
-        ]"
-      />
+     
       <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`CredentialManagement`"
@@ -132,17 +143,7 @@
         :menu_title="`Contact`"
         :route_name="`AllContact`"
       />
-      <side-bar-drop-down-menus
-        :icon="`fa fa-plus`"
-        :menu_title="`ProductManagement`"
-        :menus="[
-          {
-            route_name: `AllDigitalProduct`,
-            title: `DigitalProduct`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },
-        ]"
-      />
+      
 
       <!-- Management end -->
     </ul>

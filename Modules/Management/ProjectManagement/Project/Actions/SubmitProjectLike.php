@@ -10,28 +10,22 @@ class SubmitProjectLike
     {
         try {
             $ipAddress = request()->ip();
-            $sessionId = request()->hasSession() ? request()->session()->getId() : request()->header('User-Agent');
 
-            $existingLike = ProjectLikeModel::where('project_id', $project_id)
-                ->where(function($query) use ($ipAddress, $sessionId) {
-                    $query->where('ip', $ipAddress)
-                          ->orWhere('session_id', $sessionId);
-                })
+            $recentLike = ProjectLikeModel::where('project_id', $project_id)
+                ->where('ip', $ipAddress)
+                ->where('created_at', '>=', now()->subHours(12))
                 ->first();
 
-            if ($existingLike) {
-                // If it exists, they are toggling to unlike
-                $existingLike->delete();
-                return messageResponse('Like removed successfully', [], 200, 'success');
-            } else {
-                // If it does not exist, insert like
-                ProjectLikeModel::create([
-                    'project_id' => $project_id,
-                    'ip' => $ipAddress,
-                    'session_id' => $sessionId,
-                ]);
-                return messageResponse('Like submitted successfully', [], 201, 'success');
+            if ($recentLike) {
+                return messageResponse('You have already liked this project. Please wait 12 hours before liking again.', [], 429, 'error');
             }
+
+            ProjectLikeModel::create([
+                'project_id' => $project_id,
+                'ip'         => $ipAddress,
+            ]);
+
+            return messageResponse('Like submitted successfully', [], 201, 'success');
         } catch (\Exception $e) {
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }

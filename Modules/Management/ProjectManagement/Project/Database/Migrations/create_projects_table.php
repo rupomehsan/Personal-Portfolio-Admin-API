@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('thumb_image', 100)->nullable();
             $table->json('images')->nullable();
+            $table->tinyInteger('is_top')->default(0);
+            $table->tinyInteger('is_featured')->default(0);
 
             $table->bigInteger('creator')->unsigned()->nullable();
             $table->string('slug', 50)->nullable();
