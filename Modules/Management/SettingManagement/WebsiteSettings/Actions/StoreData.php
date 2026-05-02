@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\DB;
 
 class StoreData
 {
-    static $model = \Modules\Management\SettingManagement\WebsiteSettings\Models\Model::class;
-    static $SettingValueModel = \Modules\Management\SettingManagement\WebsiteSettings\Models\SettingValueModel::class;
+    static $model = \Modules\Management\SettingManagement\WebsiteSettings\Database\Models\Model::class;
+    static $SettingValueModel = \Modules\Management\SettingManagement\WebsiteSettings\Database\Models\SettingValueModel::class;
 
     public static function execute()
     {

@@ -17,7 +17,7 @@ class Seeder extends SeederClass
         $faker = Faker::create();
         self::$model::truncate();
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             self::$model::create([                
                 'blog_category_id' => $faker->randomNumber(8),
                 'title' => $faker->text(150),

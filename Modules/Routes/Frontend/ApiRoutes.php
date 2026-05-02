@@ -2,6 +2,7 @@
 
 use Modules\Management\BlogManagement\Blog\Controller\Controller as BlogController;
 use Modules\Management\ProjectManagement\Project\Controller\Controller as ProjectController;
+use Modules\Management\ProductManagement\DigitalProduct\Controller\Controller as DigitalProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('get-all-projects', [ProjectController::class,'index']);
@@ -25,4 +26,8 @@ Route::post('submit-digital-product-order', [DigitalProductController::class, 's
 
 
 Route::get('get-all-blogs', [BlogController::class,'index']);
- Route::get('get-all-comments-by-blog/{slug}', [BlogController::class,'getBlogComments']);
+Route::get('get-single-blog/{slug}', [BlogController::class,'getSingleBlog']);
+Route::get('get-blog-categories', [BlogController::class,'getBlogCategories']);
+Route::post('post-blog-comment', [BlogController::class,'submitComment']);
+Route::get('get-all-comments-by-blog/{slug}', [BlogController::class,'getBlogComments']);
+Route::post('submit-blog-like/{blog_id}', [BlogController::class,'submitBlogLike']);

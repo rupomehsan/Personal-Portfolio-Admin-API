@@ -43,6 +43,9 @@ class GetAllComments
                 $data = $data->onlyTrashed();
             }
 
+            // Only show main comments (not replies)
+            $data = $data->whereNull('parent_id');
+
             if (request()->has('get_all') && (int)request()->input('get_all') === 1) {
                 $data = $data
                     ->with($with)

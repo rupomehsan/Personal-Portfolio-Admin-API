@@ -15,6 +15,8 @@ class SendOrderReminder
                 return messageResponse('Order not found', [], 404, 'error');
             }
 
+            dd($order);
+
             // TODO: Send reminder email to customer
 
             return messageResponse('Reminder email sent successfully', [], 200, 'success');

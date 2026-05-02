@@ -29,7 +29,10 @@ class CommentValidation extends FormRequest
         return [
             'blog_id' => 'required | integer',
             'user_id' => 'sometimes | nullable | integer',
+            'name' => 'sometimes | nullable | string | max:255',
+            'email' => 'sometimes | nullable | email | max:255',
             'comment' => 'required | string | min:5 | max:5000',
+            'parent_id' => 'sometimes | nullable | integer',
             'creator' => 'sometimes | nullable | integer',
             'slug' => 'sometimes | nullable | string | max:50',
             'status' => 'sometimes | in:active,inactive',

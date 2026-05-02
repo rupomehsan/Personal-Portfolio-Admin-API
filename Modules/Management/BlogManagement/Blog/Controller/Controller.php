@@ -16,6 +16,9 @@ use Modules\Management\BlogManagement\Blog\Actions\GetBlogComments;
 use Modules\Management\BlogManagement\Blog\Actions\GetCommentReplies;
 use Modules\Management\BlogManagement\Blog\Actions\SubmitComment;
 use Modules\Management\BlogManagement\Blog\Actions\SubmitCommentReply;
+use Modules\Management\BlogManagement\Blog\Actions\GetSingleBlog;
+use Modules\Management\BlogManagement\Blog\Actions\SubmitBlogLike;
+use Modules\Management\BlogManagement\Blog\Actions\GetBlogCategoriesWithCount;
 use Modules\Management\BlogManagement\Blog\Validations\BulkActionsValidation;
 use Modules\Management\BlogManagement\Blog\Validations\DataStoreValidation;
 use Modules\Management\BlogManagement\Blog\Validations\CommentValidation;
@@ -110,6 +113,21 @@ class Controller extends ControllersController
     {
         $data = GetCommentReplies::execute($comment_id);
         return $data;
+    }
+
+    public function getSingleBlog($slug)
+    {
+        return GetSingleBlog::execute($slug);
+    }
+
+    public function submitBlogLike($blog_id)
+    {
+        return SubmitBlogLike::execute($blog_id);
+    }
+
+    public function getBlogCategories()
+    {
+        return GetBlogCategoriesWithCount::execute();
     }
 
 }

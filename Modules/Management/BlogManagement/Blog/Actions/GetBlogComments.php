@@ -17,14 +17,15 @@ class GetBlogComments
             $data = self::$model::query()
                 ->with(['blog:id,title', 'user:id,name'])
                 ->where('blog_id', $blog_id)
+                ->whereNull('parent_id')
                 ->where('status', $status)
                 ->orderBy($orderByColumn, $orderByType)
                 ->paginate($pageLimit);
 
             return entityResponse([
                 ...$data->toArray(),
-                "total_comments" => self::$model::where('blog_id', $blog_id)->count(),
-                "approved_comments" => self::$model::where('blog_id', $blog_id)->where('status', 'active')->count(),
+                "total_comments" => self::$model::where('blog_id', $blog_id)->whereNull('parent_id')->count(),
+                "approved_comments" => self::$model::where('blog_id', $blog_id)->whereNull('parent_id')->where('status', 'active')->count(),
             ]);
 
         } catch (\Exception $e) {

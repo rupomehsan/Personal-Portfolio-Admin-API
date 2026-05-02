@@ -4,8 +4,7 @@ namespace Modules\Management\BlogManagement\Blog\Actions;
 
 class GetCommentReplies
 {
-    static $replyModel    = \Modules\Management\BlogManagement\Blog\Database\Models\BlogCommentReplyModel::class;
-    static $junctionModel = \Modules\Management\BlogManagement\Blog\Database\Models\BlogCommentBlogCommentReplyModel::class;
+    static $commentModel = \Modules\Management\BlogManagement\Blog\Database\Models\BlogCommentModel::class;
 
     public static function execute($comment_id)
     {
@@ -14,18 +13,19 @@ class GetCommentReplies
             $orderByColumn   = request()->input('sort_by_col') ?? 'id';
             $orderByType     = request()->input('sort_type') ?? 'desc';
 
-            $replyIds = self::$junctionModel::where('blog_comment_id', $comment_id)
-                ->pluck('blog_comment_reply_id');
-
-            $data = self::$replyModel::with(['user:id,name'])
-                ->whereIn('id', $replyIds)
+            // Load replies using the unified BlogCommentModel with parent_id
+            $data = self::$commentModel::with(['user:id,name', 'replies.user:id,name'])
+                ->where('parent_id', $comment_id)
                 ->orderBy($orderByColumn, $orderByType)
                 ->paginate($pageLimit);
+
+            // Count total replies (including nested ones)
+            $totalReplies = self::$commentModel::where('parent_id', $comment_id)->count();
 
             return entityResponse([
                 ...$data->toArray(),
                 'comment_id'    => (int) $comment_id,
-                'total_replies' => $replyIds->count(),
+                'total_replies' => $totalReplies,
             ]);
 
         } catch (\Exception $e) {

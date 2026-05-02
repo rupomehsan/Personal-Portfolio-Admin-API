@@ -20,4 +20,9 @@ class BlogCommentModel extends EloquentModel
     {
         return $this->belongsTo(UserModel::class, 'user_id', 'id');
     }
+
+    public function replies()
+    {
+        return $this->hasMany(self::class, 'parent_id', 'id')->with('replies');
+    }
 }

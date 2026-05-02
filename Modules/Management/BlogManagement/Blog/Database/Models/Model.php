@@ -18,6 +18,7 @@ class Model extends EloquentModel
 
     protected $casts = [
         'images'       => 'array',
+        'contributors'       => 'array',
     ];
 
     protected static function booted()

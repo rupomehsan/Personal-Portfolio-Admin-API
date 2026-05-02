@@ -5,19 +5,19 @@
 
 export default [
   {
-    name: "blog_category_id",
-    label: "Select Blog Category",
-    type: "select",
-    multiple: false,
-    data_list: [],
+    name: "title",
+    label: "Enter Title",
+    type: "text",
     value: "",
     is_visible: true,
     class: "col-md-6",
   },
   {
-    name: "title",
-    label: "Enter Title",
-    type: "text",
+    name: "blog_category_id",
+    label: "Select Blog Category",
+    type: "select",
+    multiple: false,
+    data_list: [],
     value: "",
     is_visible: true,
     class: "col-md-6",
@@ -29,7 +29,7 @@ export default [
     type: "number",
     step: "1",
     value: "",
-    is_visible: true,
+    is_visible: false,
     class: "col-md-6",
   },
 
@@ -38,7 +38,7 @@ export default [
     label: "Enter Publish Date",
     type: "datetime-local",
     value: "",
-    is_visible: true,
+    is_visible: false,
     class: "col-md-6",
   },
   {
@@ -47,7 +47,7 @@ export default [
     type: "number",
     step: "1",
     value: "",
-    is_visible: true,
+    is_visible: false,
     class: "col-md-6",
   },
 
@@ -62,7 +62,7 @@ export default [
       { label: "Opinion", value: "opinion" },
     ],
     value: "",
-    is_visible: true,
+    is_visible: false,
     class: "col-md-6",
   },
   {
@@ -71,7 +71,7 @@ export default [
     type: "url",
     placeholder: "https://example.com",
     value: "",
-    is_visible: true,
+    is_visible: false,
     class: "col-md-6",
   },
   {
@@ -143,7 +143,7 @@ export default [
     is_visible: true,
     class: "col-md-6",
   },
-    {
+  {
     name: "thumbnail_image",
     label: "Upload Thumbnail Image",
     type: "file",
@@ -172,6 +172,4 @@ export default [
     is_visible: true,
     class: "col-md-12",
   },
-
-
 ];

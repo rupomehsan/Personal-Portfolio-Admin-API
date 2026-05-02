@@ -62,10 +62,10 @@
                 <thead style="background: #f1f3f5">
                   <tr>
                     <th style="width: 50px">#</th>
+                    <th style="min-width: 100px">Product</th>
                     <th style="min-width: 150px; text-align: left">Customer</th>
                     <th style="min-width: 150px">Email</th>
                     <th style="min-width: 120px">Phone</th>
-                    <th style="min-width: 100px">Product</th>
                     <th style="min-width: 120px">Transaction ID</th>
                     <th>Status</th>
                     <th style="min-width: 100px">Date</th>
@@ -76,12 +76,7 @@
                 <tbody v-if="orders.length">
                   <tr v-for="order in orders" :key="order.id">
                     <td>{{ order.id }}</td>
-                    <td class="text-left text-wrap">
-                      <strong>{{ order.first_name }} {{ order.last_name }}</strong>
-                    </td>
-                    <td  style="font-size: 0.85rem">{{ order.email }}</td>
-                    <td style="font-size: 0.85rem">{{ order.phone }}</td>
-                    <td style="font-size: 0.85rem" :title="order.digital_product ? order.digital_product.title : ''">
+                       <td style="font-size: 0.85rem" :title="order.digital_product ? order.digital_product.title : ''">
                       {{
                         truncate(
                           order.digital_product
@@ -91,6 +86,12 @@
                         )
                       }}
                     </td>
+                    <td class="text-left text-wrap">
+                      <strong>{{ order.first_name }} {{ order.last_name }}</strong>
+                    </td>
+                    <td  style="font-size: 0.85rem">{{ order.email }}</td>
+                    <td style="font-size: 0.85rem">{{ order.phone }}</td>
+                 
                     <td style="font-size: 0.85rem; font-weight: 600; color: #0066cc">
                       {{ order.trx_number }}
                     </td>

@@ -3,7 +3,7 @@
     <tr>
       <th class="dd-key">{{ formatLabel(key) }}</th>
       <th class="text-center">:</th>
-      <th class="dd-val">
+      <th class="dd-val text-wrap">
 
         <!-- ① Single image -->
         <template v-if="isSingleImg(key, item[key])">

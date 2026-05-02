@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='/Modules/Management/BlogManagement/Blog/Database/Migrations/create_blog_comment_replies_table.php' 
-     * Run the migrations.
+     php artisan migrate --path='/Modules/Management/BlogManagement/Blog/Database/Migrations/create_blog_likes_table.php'
      */
     public function up(): void
     {
-        Schema::create('blog_comment_replies', function (Blueprint $table) {
+        Schema::create('blog_likes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('blog_comment_id')->nullable();
-            $table->json('comment')->nullable();
+            $table->bigInteger('blog_id')->nullable();
             $table->bigInteger('user_id')->nullable();
+            $table->string('session_id', 100)->nullable();
+            $table->string('ip', 100)->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();
             $table->string('slug', 50)->nullable();
@@ -26,11 +26,8 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('blog_comment_replies');
+        Schema::dropIfExists('blog_likes');
     }
 };
