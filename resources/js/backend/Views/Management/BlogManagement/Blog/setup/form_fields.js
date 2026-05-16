@@ -164,8 +164,8 @@ export default [
     class: "col-md-6",
   },
   {
-    name: "description",
-    label: "Enter Description",
+    name: "content",
+    label: "Enter content",
     type: "textarea",
     rows: 4,
     value: "",

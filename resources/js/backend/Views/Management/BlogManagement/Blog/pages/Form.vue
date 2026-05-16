@@ -125,11 +125,31 @@ export default {
         if (field.name in this.item) {
           this.form_fields[index].value = this.item[field.name];
         }
-        if (field.name === "description") {
-          try { $("#description").summernote("code", this.item.description); }
-          catch { /* editor not mounted yet */ }
-        }
       });
+      this._loadEditorContents();
+    },
+
+    _editorFields() {
+      return this.form_fields.filter(
+        (f) => (f.type === "textarea" || f.type === "editor") && f.is_visible !== false
+      );
+    },
+
+    _loadEditorContents() {
+      // Summernote initialises with a 1 s delay inside TextEditor.vue,
+      // so we wait a bit longer before pushing content into it.
+      setTimeout(() => {
+        this._editorFields().forEach((field) => {
+          const value = this.item?.[field.name];
+          if (value != null) {
+            try {
+              $(`#${field.name}`).summernote("code", value);
+            } catch (e) {
+              console.warn(`[Editor] Failed to set content for "${field.name}":`, e);
+            }
+          }
+        });
+      }, 1100);
     },
 
     // ── Submit ─────────────────────────────────────────────────────────
@@ -153,16 +173,20 @@ export default {
     },
 
     setSummerEditor() {
-      const el = document.getElementById("description");
-      if (!el) return;
-      try {
-        const input = document.createElement("input");
-        input.setAttribute("name", "description");
-        input.value = $("#description").summernote("code");
-        el.appendChild(input);
-      } catch (e) {
-        console.warn("Summernote not available:", e);
-      }
+      this._editorFields().forEach((field) => {
+        const el = document.getElementById(field.name);
+        if (!el) return;
+        try {
+          const content = $(`#${field.name}`).summernote("code");
+          el.querySelectorAll(`input[name="${field.name}"]`).forEach((n) => n.remove());
+          const hidden = document.createElement("input");
+          hidden.setAttribute("name", field.name);
+          hidden.value = content;
+          el.appendChild(hidden);
+        } catch (e) {
+          console.warn(`[Editor] Failed to read content for "${field.name}":`, e);
+        }
+      });
     },
   },
 
