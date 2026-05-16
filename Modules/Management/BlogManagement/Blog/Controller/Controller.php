@@ -16,6 +16,7 @@ use Modules\Management\BlogManagement\Blog\Actions\GetBlogComments;
 use Modules\Management\BlogManagement\Blog\Actions\GetCommentReplies;
 use Modules\Management\BlogManagement\Blog\Actions\SubmitComment;
 use Modules\Management\BlogManagement\Blog\Actions\SubmitCommentReply;
+use Modules\Management\BlogManagement\Blog\Actions\DeleteComment;
 use Modules\Management\BlogManagement\Blog\Actions\GetSingleBlog;
 use Modules\Management\BlogManagement\Blog\Actions\SubmitBlogLike;
 use Modules\Management\BlogManagement\Blog\Actions\GetBlogCategoriesWithCount;
@@ -113,6 +114,11 @@ class Controller extends ControllersController
     {
         $data = GetCommentReplies::execute($comment_id);
         return $data;
+    }
+
+    public function deleteComment($id)
+    {
+        return DeleteComment::execute($id);
     }
 
     public function getSingleBlog($slug)

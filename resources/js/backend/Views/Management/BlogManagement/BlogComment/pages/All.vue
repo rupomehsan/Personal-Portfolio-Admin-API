@@ -158,6 +158,20 @@
                           >
                             <i class="fa fa-comments mr-1"></i>Replies
                           </button>
+                          <!-- Delete Button -->
+                          <button
+                            class="btn btn-sm"
+                            style="
+                              font-size: 0.73rem;
+                              background: #dc3545;
+                              color: #fff;
+                            "
+                            :disabled="deleting_id === comment.id"
+                            @click="delete_comment(comment)"
+                          >
+                            <i class="fa fa-trash mr-1"></i>
+                            {{ deleting_id === comment.id ? "Deleting..." : "Delete" }}
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -393,6 +407,8 @@ export default {
       reply_text: "",
       reply_error: "",
       reply_loading: false,
+
+      deleting_id: null,
     };
   },
 
@@ -553,6 +569,35 @@ export default {
         }
       } finally {
         this.reply_loading = false;
+      }
+    },
+
+    async delete_comment(comment) {
+      const ok = await window.s_confirm(
+        "Delete this comment and all its replies?",
+      );
+      if (!ok) return;
+
+      this.deleting_id = comment.id;
+      try {
+        const res = await axios.post(
+          `${this.api_base}/blog-comments/delete/${comment.id}`,
+        );
+        if (res.data?.status === "success") {
+          window.s_alert && window.s_alert(res.data.message || "Comment deleted.");
+          if (this.active_reply_id === comment.id) this.cancel_reply();
+          await this.load_comments();
+        } else {
+          window.s_warning &&
+            window.s_warning(res.data?.message || "Failed to delete comment.");
+        }
+      } catch (e) {
+        window.s_warning &&
+          window.s_warning(
+            e.response?.data?.message || "An error occurred while deleting.",
+          );
+      } finally {
+        this.deleting_id = null;
       }
     },
 

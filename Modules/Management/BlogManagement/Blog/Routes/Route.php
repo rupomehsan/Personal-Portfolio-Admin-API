@@ -22,6 +22,7 @@ Route::prefix('v1')->group(function () {
         Route::get('', [Controller::class, 'getAllComments']);
         Route::get('blog/{blog_id}', [Controller::class, 'getBlogComments']);
         Route::post('store', [Controller::class, 'submitComment']);
+        Route::post('delete/{id}', [Controller::class, 'deleteComment']);
     });
 
     // Blog Comment Replies Routes
